@@ -1,42 +1,26 @@
+import { formula } from './formula';
+
 function deepCopy(data) {
   return JSON.parse(JSON.stringify(data))
 }
 function getRandomNumber(data) {
   return Math.random()
 }
+
 /**
- * 
+ * @param {number} num 
+ * @param {number} places 保留几位小数点
+ */
+
+function numberFixed(num,places){
+  return Number(num.toFixed(places))
+}
+
+/**
+ * 战斗计算函数
  * @param {obj} playerAttribute 玩家属性
  * @param {obj} monsterAttribute 怪物属性
  */
-let A = playerAttribute = {
-  type: 'player',
-  MAXHP: 100,
-  CURHP: 100,
-  ATK: 10,
-  ARMOR: 2,
-  EVADE: 0.5,
-  ATKSPEED: 1,
-  ARP: 1,
-  CRIT: 0.1,
-  CRITDMG: 1.5,
-  STR: 10,
-  STA: 10,
-  AGI: 10,
-  INT: 10,
-}
-let B = monsterAttribute = {
-  type: 'monster',
-  MAXHP: 100,
-  CURHP: 100,
-  ATK: 8,
-  ARMOR: 1,
-  EVADE: 0,
-  ATKSPEED: 0.6,
-  ARP: 1,
-  CRIT: 0,
-  CRITDMG: 1.5,
-}
 var combatTimer = {}
 function combatCalculation(playerAttribute, monsterAttribute) {
   let p = playerAttribute,
@@ -48,13 +32,23 @@ function combatCalculation(playerAttribute, monsterAttribute) {
 function DMGCalculation(attacker, defender) {
   combatTimer = setTimeout(() => {
     //伤害计算
-    let takeDmg = attacker.ATK - (defender.ARMOR - attacker.ARP)
+    var takeDMGPercent = formula.methods.armorFormula(defender.ARMOR - attacker.ARP)
+
+    let takeDmg = attacker.ATK*takeDMGPercent
 
     if(evadeCalculation(attacker, defender)){
       takeDmg = 0
       console.log("miss")
     }
 
+    if(critCalculation(attacker, defender)){
+      takeDmg = takeDmg*attacker.CRITDMG
+      console.log("CRIT")
+    }
+
+    
+
+    takeDmg = Math.ceil(takeDmg)
     defender.CURHP = defender.CURHP - takeDmg
     
     //伤害结算
@@ -84,9 +78,29 @@ function evadeCalculation(attacker, defender) {
     return true
   }
 }
-combatCalculation(A, B)
+function critCalculation(attacker, defender) {
+  var a = getRandomNumber()
+  if(a<attacker.CRIT){
+    return true
+  }
+}
+
+/**
+ * 根据玩家四维属性计算属性
+ * @param {obj} playerAttribute 玩家属性
+ */
+function attributeCalculation(playerAttribute){
+  var a =playerAttribute
+  a.ATK += a.STR*0.5
+  a.ARP += a.STR*0.2
+  a.ATKSP += a.AGI*0.5
+  a.EVADE += a.AGI*0.0005
+  a.HP += a.STA*15
+  a.HPRS += a.STA*0.03
+  a.SORA += a.INT*0.005
+}
 
 
 export default {
-  deepCopy,
+  deepCopy,getRandomNumber,numberFixed,combatCalculation
 }

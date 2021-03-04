@@ -1,10 +1,12 @@
 <template>
   <div class="main" @contextmenu.prevent="contextmenu($event)">
+    <button @click="battleStart">battleStart</button>
   </div>
 </template>
 <script>
 import cTooltip from './uiComponent/tooltip';
 import { assist } from '../assets/js/assist';
+import handle from '../assets/js/handle.js';
 export default {
   name: "index",
   mixins: [assist],
@@ -35,6 +37,38 @@ export default {
   watch: {
   },
   methods: {
+    battleStart() {
+      let playerAttribute = {
+        type: 'player',
+        MAXHP: 6000,
+        CURHP: 6000,
+        ATK: 1000,
+        ARMOR: 200,
+        EVADE: 0.5,
+        ATKSPEED: 2.5,
+        ARP: 100,
+        CRIT: 0.3,
+        CRITDMG: 1.5,
+        STR: 10,
+        STA: 10,
+        AGI: 10,
+        INT: 10,
+      }
+      let monsterAttribute = {
+        type: 'monster',
+        MAXHP: 20000,
+        CURHP: 20000,
+        ATK: 800,
+        ARMOR: 200,
+        EVADE: 0,
+        ATKSPEED: 1,
+        ARP: 1,
+        CRIT: 0,
+        CRITDMG: 1.5,
+      }
+      handle.combatCalculation(playerAttribute,monsterAttribute)
+    },
+
     // 初始化rem
     initial() {
       let html = document.documentElement;
@@ -46,11 +80,6 @@ export default {
       let rem = (wW * 100) / designSize;
       document.documentElement.style.fontSize = rem + "px";
 
-      if (document.documentElement.clientWidth < 768) {
-        this.$store.commit('set_operator_schema', true)
-      } else {
-        this.$store.commit('set_operator_schema', false)
-      }
     },
   }
 };
