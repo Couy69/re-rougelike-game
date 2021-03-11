@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import vueInstance from './main'
-import handle from './assets/js/handle'
+import handle from './assets/core/handle'
 Vue.use(Vuex)
 
 var initial_player_attribute = {
@@ -9,10 +9,6 @@ var initial_player_attribute = {
   MAXHP: 100,
   CURHP: 100,
   // 战斗属性
-  STR: 10,          //力量
-  STA: 10,          //耐力
-  AGI: 10,          //敏捷
-  INT: 10,          //智力
   ATK: 10,          //攻击力
   ARMOR: 2,         //护甲
   EVADE: 0.5,       //闪避
@@ -28,12 +24,6 @@ var initial_player_attribute = {
   EXP:0,
   EXPNL:100,        //升到下一级需要的经验
   LV:1,
-  POINT:0,          //属性点
-  SORA:1,           //金币与经验获取倍率
-  GETSTR:3,         //升级获得的力量
-  GETSTA:3,         //升级获得的耐力
-  GETAGI:3,         //升级获得的敏捷
-  GETINT:3,         //升级获得的智力
 }
 
 export default new Vuex.Store({

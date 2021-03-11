@@ -4,87 +4,51 @@
   </div>
 </template>
 <script>
-import cTooltip from './uiComponent/tooltip';
-import { assist } from '../assets/js/assist';
-import handle from '../assets/js/handle.js';
+import cTooltip from "./uiComponent/tooltip"
+import { assist } from "../assets/js/assist"
+import handle from "../assets/core/handle.js"
+import player from "../assets/core/player.js"
 export default {
   name: "index",
   mixins: [assist],
   data() {
-    return {
-    };
+    return {}
   },
   components: { cTooltip },
   created() {
     // 窗口自适应
     window.onresize = () => {
       if (this.debounceTime) {
-        clearTimeout(this.debounceTime);
+        clearTimeout(this.debounceTime)
       }
       this.debounceTime = setTimeout(() => {
-        this.debounceTime = null;
+        this.debounceTime = null
         this.initial()
-      }, 200);
-
-    };
+      }, 200)
+    }
     this.initial()
-
   },
-  mounted() {
-  },
-  computed: {
-  },
-  watch: {
-  },
+  mounted() {},
+  computed: {},
+  watch: {},
   methods: {
     battleStart() {
-      let playerAttribute = {
-        type: 'player',
-        MAXHP: 6000,
-        CURHP: 6000,
-        ATK: 1000,
-        ARMOR: 200,
-        EVADE: 0.5,
-        ATKSPEED: 2.5,
-        ARP: 100,
-        CRIT: 0.3,
-        CRITDMG: 1.5,
-        STR: 10,
-        STA: 10,
-        AGI: 10,
-        INT: 10,
-      }
-      let monsterAttribute = {
-        type: 'monster',
-        MAXHP: 20000,
-        CURHP: 20000,
-        ATK: 800,
-        ARMOR: 200,
-        EVADE: 0,
-        ATKSPEED: 1,
-        ARP: 1,
-        CRIT: 0,
-        CRITDMG: 1.5,
-      }
-      handle.combatCalculation(playerAttribute,monsterAttribute)
+      console.log(player.playerBaseAttr)
     },
 
     // 初始化rem
     initial() {
-      let html = document.documentElement;
-      let wW = html.clientHeight;
-      let designSize = 1000; //设计高度
+      let html = document.documentElement
+      let wW = html.clientHeight
+      let designSize = 1000 //设计高度
       if (!this.fullScreen) {
-        wW = html.clientHeight;
+        wW = html.clientHeight
       }
-      let rem = (wW * 100) / designSize;
-      document.documentElement.style.fontSize = rem + "px";
-
-    },
+      let rem = (wW * 100) / designSize
+      document.documentElement.style.fontSize = rem + "px"
+    }
   }
-};
-
-
+}
 </script>
 <style lang="scss" scoped>
 * {
