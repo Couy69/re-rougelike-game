@@ -1,13 +1,13 @@
 <template>
   <div class="main" @contextmenu.prevent="contextmenu($event)">
-    <button @click="battleStart">battleStart</button>
+    <div class="button" @click="battleStart">battleStart</div>
   </div>
 </template>
 <script>
 import cTooltip from "./uiComponent/tooltip"
 import { assist } from "../assets/js/assist"
 import handle from "../assets/core/handle.js"
-import player from "../assets/core/player.js"
+import Player from "../assets/core/player.js"
 export default {
   name: "index",
   mixins: [assist],
@@ -33,6 +33,7 @@ export default {
   watch: {},
   methods: {
     battleStart() {
+      var player = new Player
       console.log(player.playerBaseAttr)
     },
 

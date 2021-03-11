@@ -19,7 +19,6 @@ function getRandomNumber(data) {
 function encrypt(data) {
   return CryptoJS.AES.encrypt(data,config.secretKey).toString();
 }
-
 function decrypt(data) {
   let bytes = CryptoJS.AES.decrypt(data, config.secretKey);
   let originalText = bytes.toString(CryptoJS.enc.Utf8);
@@ -106,22 +105,6 @@ function critCalculation(attacker, defender) {
     return true
   }
 }
-
-/**
- * 根据玩家四维属性计算属性
- * @param {obj} playerAttribute 玩家属性
- */
-function attributeCalculation(playerAttribute) {
-  var a = playerAttribute
-  a.ATK += a.STR * 0.5
-  a.ARP += a.STR * 0.2
-  a.ATKSP += a.AGI * 0.5
-  a.EVADE += a.AGI * 0.0005
-  a.HP += a.STA * 15
-  a.HPRS += a.STA * 0.03
-  a.SORA += a.INT * 0.005
-}
-
 
 export default {
   deepCopy,
