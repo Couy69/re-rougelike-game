@@ -1,4 +1,5 @@
 const config = {
+  secretKey:'123',
   playerAttribute: {
     name: 'player',
     unitType: {

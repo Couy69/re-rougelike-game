@@ -1,10 +1,29 @@
-import { formula } from './formula';
+import {
+  formula
+} from './formula';
+import CryptoJS from 'crypto-js';
 
 function deepCopy(data) {
   return JSON.parse(JSON.stringify(data))
 }
+
 function getRandomNumber(data) {
   return Math.random()
+}
+
+/**
+ * 存档加密与解密，正式服上的密钥是不同的
+ * @param {String} data 
+ * @returns 
+ */
+function encrypt(data) {
+  return CryptoJS.AES.encrypt(data,config.secretKey).toString();
+}
+
+function decrypt(data) {
+  let bytes = CryptoJS.AES.decrypt(data, config.secretKey);
+  let originalText = bytes.toString(CryptoJS.enc.Utf8);
+  return originalText
 }
 
 /**
@@ -12,7 +31,7 @@ function getRandomNumber(data) {
  * @param {number} places 保留几位小数点
  */
 
-function numberFixed(num,places){
+function numberFixed(num, places) {
   return Number(num.toFixed(places))
 }
 
@@ -22,6 +41,7 @@ function numberFixed(num,places){
  * @param {obj} monsterAttribute 怪物属性
  */
 var combatTimer = {}
+
 function combatCalculation(playerAttribute, monsterAttribute) {
   let p = playerAttribute,
     m = monsterAttribute
@@ -34,23 +54,23 @@ function DMGCalculation(attacker, defender) {
     //伤害计算
     var takeDMGPercent = formula.methods.armorFormula(defender.ARMOR - attacker.ARP)
 
-    let takeDmg = attacker.ATK*takeDMGPercent
+    let takeDmg = attacker.ATK * takeDMGPercent
 
-    if(evadeCalculation(attacker, defender)){
+    if (evadeCalculation(attacker, defender)) {
       takeDmg = 0
       console.log("miss")
     }
 
-    if(critCalculation(attacker, defender)){
-      takeDmg = takeDmg*attacker.CRITDMG
+    if (critCalculation(attacker, defender)) {
+      takeDmg = takeDmg * attacker.CRITDMG
       console.log("CRIT")
     }
 
-    
+
 
     takeDmg = Math.ceil(takeDmg)
     defender.CURHP = defender.CURHP - takeDmg
-    
+
     //伤害结算
     if (defender.type == 'player') {
       console.log("palyer tack dmg:" + takeDmg + ",剩余血量：" + defender.CURHP)
@@ -68,19 +88,21 @@ function DMGCalculation(attacker, defender) {
         return console.log('palyerWin')
       }
     }
-    
+
     DMGCalculation(attacker, defender)
   }, 1000 / attacker.ATKSPEED)
 }
+
 function evadeCalculation(attacker, defender) {
   var a = getRandomNumber()
-  if(a<defender.EVADE){
+  if (a < defender.EVADE) {
     return true
   }
 }
+
 function critCalculation(attacker, defender) {
   var a = getRandomNumber()
-  if(a<attacker.CRIT){
+  if (a < attacker.CRIT) {
     return true
   }
 }
@@ -89,18 +111,23 @@ function critCalculation(attacker, defender) {
  * 根据玩家四维属性计算属性
  * @param {obj} playerAttribute 玩家属性
  */
-function attributeCalculation(playerAttribute){
-  var a =playerAttribute
-  a.ATK += a.STR*0.5
-  a.ARP += a.STR*0.2
-  a.ATKSP += a.AGI*0.5
-  a.EVADE += a.AGI*0.0005
-  a.HP += a.STA*15
-  a.HPRS += a.STA*0.03
-  a.SORA += a.INT*0.005
+function attributeCalculation(playerAttribute) {
+  var a = playerAttribute
+  a.ATK += a.STR * 0.5
+  a.ARP += a.STR * 0.2
+  a.ATKSP += a.AGI * 0.5
+  a.EVADE += a.AGI * 0.0005
+  a.HP += a.STA * 15
+  a.HPRS += a.STA * 0.03
+  a.SORA += a.INT * 0.005
 }
 
 
 export default {
-  deepCopy,getRandomNumber,numberFixed,combatCalculation
+  deepCopy,
+  getRandomNumber,
+  numberFixed,
+  combatCalculation,
+  encrypt,
+  decrypt
 }
