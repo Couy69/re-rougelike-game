@@ -7,23 +7,23 @@ class Player {
     this.playerShoes = {}
   }
 
-  set_player_weapon(data) {
+  setPlayerWeapon(data) {
     this.state.playerAttribute.weapon = data
-    this.set_player_attribute()
+    this.setPlayerAttribute()
   }
-  set_player_armor(data) {
+  setPlayerArmor(data) {
     this.state.playerAttribute.armor = data
-    this.set_player_attribute()
+    this.setPlayerAttribute()
   }
-  set_player_ring(data) {
+  setPlayerRing(data) {
     this.state.playerAttribute.ring = data
-    this.set_player_attribute()
+    this.setPlayerAttribute()
   }
-  set_player_Shoes(data) {
+  setPlayerShoes(data) {
     this.state.playerAttribute.shoes = data
-    this.set_player_attribute()
+    this.setPlayerAttribute()
   }
-  set_player_attribute(){
+  setPlayerAttribute(){
 
   }
 

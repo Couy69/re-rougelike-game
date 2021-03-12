@@ -1,20 +1,27 @@
 <template>
   <div class="main" @contextmenu.prevent="contextmenu($event)">
-    <div class="button" @click="battleStart">battleStart</div>
+    <div class="content">
+      <div class="l">
+        <div class="lt">
+
+        </div>
+      </div>
+    </div>
+    
   </div>
 </template>
 <script>
-import cTooltip from "./uiComponent/tooltip"
 import { assist } from "../assets/js/assist"
 import handle from "../assets/core/handle.js"
 import Player from "../assets/core/player.js"
+import equiPanel from "./component/equiPanel"
 export default {
   name: "index",
   mixins: [assist],
   data() {
     return {}
   },
-  components: { cTooltip },
+  components: { equiPanel },
   created() {
     // 窗口自适应
     window.onresize = () => {
@@ -60,7 +67,7 @@ a {
   cursor: pointer;
 }
 .main {
-  background: #111;
+  background: #222;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -71,5 +78,21 @@ a {
   right: 0;
   color: #eee;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  min-height:700px;
+  min-width: 1200px;
+}
+.content{
+  width: 1200px;
+  height:100%;
+  border: 1px solid #eee;
+}
+.l{
+  width: 300px;
+  height:100%;
+  .lt{
+    
+  }
 }
 </style>
