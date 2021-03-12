@@ -1,6 +1,24 @@
 <template>
   <div class="equi">
-    <div class="equiPanel" v-if="JSON.stringify(equi) != '{}'">
+    <div
+      class="eicon"
+      v-if="equi.lv"
+      @contextmenu.prevent="openMenu(k, $event)"
+      @mouseover="showItemInfo($event, equi.itemType, equi)"
+      @mouseleave="closeItemInfo"
+    >
+      <div
+        class="icon"
+        :style="{ 'box-shadow': 'inset 0 0 7px 2px ' + equi.quality.color }"
+      >
+        <img :src="equi.type.iconSrc" alt="" />
+      </div>
+    </div>
+    <div
+      class="equiItemPanel"
+      :style="itemDialogStyle"
+      v-if="JSON.stringify(equi) != '{}'"
+    >
       <div class="title">
         <div
           class="icon"
@@ -48,6 +66,7 @@ export default {
   mixins: [equiAttributeWeapon],
   data() {
     return {
+      itemDialogStyle: { display: "none" },
       equi: {
         itemType: "weapon",
         quality: {
@@ -60,7 +79,7 @@ export default {
         lv: 1,
         type: {
           name: "赤柳血刃",
-          iconSrc: "./icons/W_Sword019.png",
+          iconSrc: "./icons/U_Sword09.png",
           entry: [
             {
               valCoefficient: 1.3,
@@ -109,6 +128,30 @@ export default {
     }
   },
   methods: {
+    openMenu() {},
+    showItemInfo(e, type, item, needComparison) {
+      let x = e.clientX,
+        y = e.clientY,
+        maxH = window.innerHeight
+      if (y < window.innerHeight / 2) {
+        this.itemDialogStyle = {
+          display: "flex",
+          top: y + 20 + "px",
+          left: x + 20 + "px"
+        }
+      } else {
+        this.itemDialogStyle = {
+          display: "flex",
+          bottom: maxH - y + 20 + "px",
+          left: x + 20 + "px"
+        }
+      }
+    },
+    closeItemInfo() {
+      this.itemDialogStyle = {
+        display: "none"
+      }
+    },
     createNewItem(equiType, qualityIndex, lv) {
       var equi = {}
       equi.itemType = equiType
@@ -248,40 +291,57 @@ export default {
 * {
   box-sizing: border-box;
 }
-.equiPanel {
+.eicon {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+.icon {
+  width: 0.45rem;
+  height: 0.45rem;
+  background: #000;
+  background-image: url(../../assets/img/border/sp1.png);
+  background-size: 120%;
+  display: flex;
+  background-position: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.04rem;
+  img {
+    width: 85%;
+    height: 85%;
+  }
+}
+.eicon {
+  .icon {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}
+.icon.u {
+  background-image: url(../../assets/img/border/sp2.png);
+  background-size: 120%;
+}
+.equiItemPanel {
   color: #f1f1f1;
   width: 2rem;
   height: auto;
   background: rgba(0, 0, 0, 0.8);
   border: #393839;
   border-radius: 0.05rem;
-  padding: 0.16rem;
+  padding: 0.1rem;
   box-sizing: border-box;
+  position: fixed;
+  display: flex;
+  z-index: 99;
+  flex-direction: column;
   .title {
     display: flex;
     padding-bottom: 0.05rem;
     border-bottom: 1px solid #777;
-    .icon {
-      width: 0.45rem;
-      height: 0.45rem;
-      background: #000;
-      background-image: url(../../assets/img/border/sp2.png);
-      background-size: 120%;
-      display: flex;
-      background-position: center;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.04rem;
-      img {
-        width: 85%;
-        height: 85%;
-      }
-    }
-    .icon.u {
-      background-image: url(../../assets/img/border/sp3.png);
-      background-size: 120%;
 
-    }
     .name {
       font-size: 0.16rem;
       text-shadow: 0px 0px 1px (255, 255, 255, 0.3);

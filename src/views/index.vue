@@ -3,8 +3,20 @@
     <div class="content">
       <div class="l">
         <div class="lt">
-
+          <div class="main-info">
+            <p class="playname">黑羽上弦灭弓
+            <p class="time">00:00:00</p>
+          </div>
+          <div class="equi">
+            <equiInfoPanel/>
+          </div>
         </div>
+        <div class="lb">
+          <playerAttr/>
+        </div>
+      </div>
+      <div class="r">
+
       </div>
     </div>
     
@@ -14,14 +26,15 @@
 import { assist } from "../assets/js/assist"
 import handle from "../assets/core/handle.js"
 import Player from "../assets/core/player.js"
-import equiPanel from "./component/equiPanel"
+import equiInfoPanel from "./component/equiInfoPanel"
+import playerAttr from "./component/playerAttr"
 export default {
   name: "index",
   mixins: [assist],
   data() {
     return {}
   },
-  components: { equiPanel },
+  components: {equiInfoPanel,playerAttr },
   created() {
     // 窗口自适应
     window.onresize = () => {
@@ -86,13 +99,41 @@ a {
 .content{
   width: 1200px;
   height:100%;
-  border: 1px solid #eee;
+  display: flex;
 }
 .l{
   width: 300px;
   height:100%;
   .lt{
-    
+    height:400px;
+    width:300px;
+    .main-info{
+      height:100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 .2rem;
+      .playname{
+        font-size: .2rem;
+      }
+      .time{
+        font-size: .16rem;
+      }
+    }
+    .equi{
+      height:300px;
+      width:100%;
+    }
   }
+  .lb{
+    height:300px;
+    width:300px;
+  }
+}
+.r{
+  width: 900px;
+  height:700px;
+  position: relative;
+  border:1px solid #eee;
 }
 </style>
