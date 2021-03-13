@@ -28,7 +28,11 @@ var initial_player_attribute = {
 
 export default new Vuex.Store({
   state: {
-    playerAttribute: {}
+    playerAttribute: {},
+    sysInfo: [{
+      type: '',
+      msg: "欢迎你，菜鸟勇士。"
+    }],
   },
   mutations: {
     set_player_attribute(state, data) {
@@ -39,6 +43,10 @@ export default new Vuex.Store({
     },
     reset_player_gold(state, data) {
       this.state.playerAttribute.GOLD = parseInt(data);
+    },
+
+    clear_sys_info(state, data) {
+      this.state.sysInfo.splice(1, this.state.sysInfo.length)
     },
   },
 })

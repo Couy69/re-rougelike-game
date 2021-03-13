@@ -16,7 +16,10 @@
         </div>
       </div>
       <div class="r">
-
+        <challengeMenu/>
+        <battlePanel/>
+        <settingsMenu/>
+        <infoPanel/>
       </div>
     </div>
     
@@ -28,13 +31,17 @@ import handle from "../assets/core/handle.js"
 import Player from "../assets/core/player.js"
 import equiInfoPanel from "./component/equiInfoPanel"
 import playerAttr from "./component/playerAttr"
+import battlePanel from "./component/battlePanel"
+import challengeMenu from "./component/challengeMenu"
+import settingsMenu from "./component/settingsMenu"
+import infoPanel from "./component/infoPanel"
 export default {
   name: "index",
   mixins: [assist],
   data() {
     return {}
   },
-  components: {equiInfoPanel,playerAttr },
+  components: {equiInfoPanel,playerAttr,battlePanel,challengeMenu,settingsMenu,infoPanel },
   created() {
     // 窗口自适应
     window.onresize = () => {
@@ -134,6 +141,5 @@ a {
   width: 900px;
   height:700px;
   position: relative;
-  border:1px solid #eee;
 }
 </style>
