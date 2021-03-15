@@ -17,8 +17,9 @@ function getRandomNumber(data) {
  * @returns 
  */
 function encrypt(data) {
-  return CryptoJS.AES.encrypt(data,config.secretKey).toString();
+  return CryptoJS.AES.encrypt(data, config.secretKey).toString();
 }
+
 function decrypt(data) {
   let bytes = CryptoJS.AES.decrypt(data, config.secretKey);
   let originalText = bytes.toString(CryptoJS.enc.Utf8);
@@ -41,39 +42,46 @@ function numberFixed(num, places) {
  */
 var combatTimer = {}
 
-function combatCalculation(playerAttribute, monsterAttribute) {
+function combatCalculation(playerAttribute, monsterAttribute, component) {
   let p = playerAttribute,
     m = monsterAttribute
-  DMGCalculation(p, m)
-  DMGCalculation(m, p)
+  DMGCalculation(p, m, component)
+  DMGCalculation(m, p, component)
 }
 
-function DMGCalculation(attacker, defender) {
+function DMGCalculation(attacker, defender, component) {
   combatTimer = setTimeout(() => {
     //伤害计算
     var takeDMGPercent = formula.methods.armorFormula(defender.ARMOR - attacker.ARP)
-
+    attacker.ATK = parseInt(getRandomNumber() * (attacker.ATKMAX - attacker.ATKMIN)) + attacker.ATKMIN
     let takeDmg = attacker.ATK * takeDMGPercent
-
-    if (evadeCalculation(attacker, defender)) {
-      takeDmg = 0
-      console.log("miss")
+    let info = {
+      show: true,
+      type:'normol'
     }
+
 
     if (critCalculation(attacker, defender)) {
       takeDmg = takeDmg * attacker.CRITDMG
-      console.log("CRIT")
+      info.type = 'crit'
     }
 
-
+    if (evadeCalculation(attacker, defender)) {
+      takeDmg = 0
+      info.type = 'miss'
+      info.msg = 'MISS'
+    }
 
     takeDmg = Math.ceil(takeDmg)
-    defender.CURHP = defender.CURHP - takeDmg
-
+    let curHP = (defender.CURHP - takeDmg)<0?0:defender.CURHP - takeDmg
+    defender.CURHP = curHP
+    info.msg = '-'+takeDmg
     //伤害结算
-    if (defender.type == 'player') {
+    if (defender.name == 'player') {
+      component.showDmgInfo(info,'player')
       console.log("palyer tack dmg:" + takeDmg + ",剩余血量：" + defender.CURHP)
     } else {
+      component.showDmgInfo(info,'monster')
       console.log("monster take dmg:" + takeDmg + ",剩余血量：" + defender.CURHP)
     }
 
@@ -88,7 +96,7 @@ function DMGCalculation(attacker, defender) {
       }
     }
 
-    DMGCalculation(attacker, defender)
+    DMGCalculation(attacker, defender,component)
   }, 1000 / attacker.ATKSPEED)
 }
 

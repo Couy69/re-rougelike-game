@@ -31,7 +31,7 @@ export default new Vuex.Store({
     playerAttribute: {},
     sysInfo: [{
       type: '',
-      msg: "欢迎你，菜鸟勇士。"
+      msg: "😠"
     }],
   },
   mutations: {
