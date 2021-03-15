@@ -4,25 +4,25 @@
       <div class="l">
         <div class="lt">
           <div class="main-info">
-            <p class="playname">黑羽上弦灭弓
+            <p class="playname">黑羽上弦灭弓</p>
             <p class="time">00:00:00</p>
           </div>
           <div class="equi">
-            <equiInfoPanel/>
+            <equiInfoPanel />
           </div>
         </div>
         <div class="lb">
-          <playerAttr/>
+          <playerAttr />
         </div>
       </div>
       <div class="r">
-        <challengeMenu/>
-        <battlePanel/>
-        <settingsMenu/>
-        <infoPanel/>
+        <challengeMenu />
+        <battlePanel />
+        <settingsMenu />
+        <infoPanel />
       </div>
     </div>
-    
+    <cardSelectPanel />
   </div>
 </template>
 <script>
@@ -35,13 +35,22 @@ import battlePanel from "./component/battlePanel"
 import challengeMenu from "./component/challengeMenu"
 import settingsMenu from "./component/settingsMenu"
 import infoPanel from "./component/infoPanel"
+import cardSelectPanel from "./component/cardSelectPanel"
 export default {
   name: "index",
   mixins: [assist],
   data() {
     return {}
   },
-  components: {equiInfoPanel,playerAttr,battlePanel,challengeMenu,settingsMenu,infoPanel },
+  components: {
+    equiInfoPanel,
+    playerAttr,
+    battlePanel,
+    challengeMenu,
+    settingsMenu,
+    infoPanel,
+    cardSelectPanel
+  },
   created() {
     // 窗口自适应
     window.onresize = () => {
@@ -60,7 +69,7 @@ export default {
   watch: {},
   methods: {
     battleStart() {
-      var player = new Player
+      var player = new Player()
       console.log(player.playerBaseAttr)
     },
 
@@ -100,46 +109,46 @@ a {
   height: 100%;
   display: flex;
   justify-content: center;
-  min-height:700px;
+  min-height: 700px;
   min-width: 1200px;
 }
-.content{
+.content {
   width: 1200px;
-  height:100%;
+  height: 100%;
   display: flex;
 }
-.l{
+.l {
   width: 300px;
-  height:100%;
-  .lt{
-    height:400px;
-    width:300px;
-    .main-info{
-      height:100px;
+  height: 100%;
+  .lt {
+    height: 400px;
+    width: 300px;
+    .main-info {
+      height: 100px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 .2rem;
-      .playname{
-        font-size: .2rem;
+      padding: 0 0.2rem;
+      .playname {
+        font-size: 0.2rem;
       }
-      .time{
-        font-size: .16rem;
+      .time {
+        font-size: 0.16rem;
       }
     }
-    .equi{
-      height:300px;
-      width:100%;
+    .equi {
+      height: 300px;
+      width: 100%;
     }
   }
-  .lb{
-    height:300px;
-    width:300px;
+  .lb {
+    height: 300px;
+    width: 300px;
   }
 }
-.r{
+.r {
   width: 900px;
-  height:700px;
+  height: 700px;
   position: relative;
 }
 </style>
