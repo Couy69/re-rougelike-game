@@ -1,6 +1,6 @@
 class Player {
   constructor() {
-    this.playerBaseAttr = config.playerAttribute
+    this.playerBaseAttr = {}
     this.playerFinalAttr = {
       name: 'player',
       unitType: {
@@ -34,27 +34,28 @@ class Player {
     this.playerRing = {}
     this.playerShoes = {}
   }
-
+  setPlayerBaseAttr(data){
+    this.playerBaseAttr = data
+  }
   setPlayerWeapon(data) {
     this.state.playerAttribute.weapon = data
-    this.setPlayerAttribute()
+    this.setPlayerFinalAttribute()
   }
   setPlayerArmor(data) {
     this.state.playerAttribute.armor = data
-    this.setPlayerAttribute()
+    this.setPlayerFinalAttribute()
   }
   setPlayerRing(data) {
     this.state.playerAttribute.ring = data
-    this.setPlayerAttribute()
+    this.setPlayerFinalAttribute()
   }
   setPlayerShoes(data) {
     this.state.playerAttribute.shoes = data
-    this.setPlayerAttribute()
+    this.setPlayerFinalAttribute()
   }
-  setPlayerAttribute() {
-
+  setPlayerFinalAttribute() {
+    this.playerFinalAttr = this.playerBaseAttr
   }
 
 }
-let player = new Player
-export default player
+export default Player

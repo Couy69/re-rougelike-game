@@ -2,6 +2,9 @@ const CompressionPlugin = require("compression-webpack-plugin")
 module.exports = {
   // 选项...
   publicPath: '',
+  devServer: {
+    port: 9090, // 端口
+  },
   productionSourceMap: false,
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {

@@ -57,7 +57,7 @@ function DMGCalculation(attacker, defender, component) {
     let takeDmg = attacker.ATK * takeDMGPercent
     let info = {
       show: true,
-      type:'normol'
+      type: 'normol'
     }
 
 
@@ -73,15 +73,15 @@ function DMGCalculation(attacker, defender, component) {
     }
 
     takeDmg = Math.ceil(takeDmg)
-    let curHP = (defender.CURHP - takeDmg)<0?0:defender.CURHP - takeDmg
+    let curHP = (defender.CURHP - takeDmg) < 0 ? 0 : defender.CURHP - takeDmg
     defender.CURHP = curHP
-    info.msg = '-'+takeDmg
+    info.msg = '-' + takeDmg
     //伤害结算
     if (defender.name == 'player') {
-      component.showDmgInfo(info,'player')
+      component.showDmgInfo(info, 'player')
       console.log("palyer tack dmg:" + takeDmg + ",剩余血量：" + defender.CURHP)
     } else {
-      component.showDmgInfo(info,'monster')
+      component.showDmgInfo(info, 'monster')
       console.log("monster take dmg:" + takeDmg + ",剩余血量：" + defender.CURHP)
     }
 
@@ -96,7 +96,7 @@ function DMGCalculation(attacker, defender, component) {
       }
     }
 
-    DMGCalculation(attacker, defender,component)
+    DMGCalculation(attacker, defender, component)
   }, 1000 / attacker.ATKSPEED)
 }
 

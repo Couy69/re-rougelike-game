@@ -1,46 +1,43 @@
 <template>
   <div class="cardSelectPanel">
-    <div
-      class="card"
-      @mousemove="mousemove"
-      @mouseleave="mouseleave"
-      :style="transform"
-    >
-      <img src="../../assets/icons/tachie/boss3.gif" alt="" />
+    <div class="title">
+      你转生了，你忘掉了之前大部分经历，但是你隐约记得，你之前的身份似乎是...
     </div>
-    <div class="card"></div>
-    <div class="card"></div>
+    <div class="panel">
+      <card :data="v" v-for="v in datas" :key="v.id"/>
+    </div>
   </div>
 </template>
 <script>
+import card from "./cardPanel"
+import {characterConfig} from "../../assets/config/characterConfig.js"
 export default {
   name: "cardSelectPanel",
-  components: {},
+  components: { card },
+  mixins:[characterConfig],
   data() {
     return {
-      attr: {},
-      transform: {
-        transform: "translate(0,-50%)"
-      }
+      arr:[],
+      datas:[]
     }
   },
   mounted() {},
   watch: {},
   methods: {
-    mousemove(e) {
-      let x = ( e.offsetY -150 ) / 10,
-        y = (e.offsetX-100) / 8
-      this.transform = {
-        transform: `
-        translate(0,-50%)  rotateX(${x}deg) rotateY(${y}deg)
-      `
-      }
+    // 随机三个随机初始人物
+    selectCharacter() {
+      this.getRandomNums()
+      this.arr.map(item=>{
+        this.datas.push(this.characterConfig[item])
+      })
+      
     },
-    mouseleave() {
-      this.transform = {
-        transform: `
-        translate(0,-50%)
-      `
+    getRandomNums() {
+      while (this.arr.length < 3) {
+        let num = parseInt(Math.random()*this.characterConfig.length)
+        if (this.arr.indexOf(num) == -1) {
+          this.arr.push(num)
+        }
       }
     }
   }
@@ -59,16 +56,18 @@ export default {
   background: rgba($color: #000000, $alpha: 0.7);
   z-index: 101;
   display: flex;
+  padding-top: 120px;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  .card {
-    cursor: pointer;
-    border: 1px solid #ccc;
-    margin: 0px 30px;
-    box-shadow: 0 0 5px 3px #fff;
-    transform: translate(0, -50%);
-    width: 200px;
-    height: 300px;
+  justify-content: flex-start;
+  .title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

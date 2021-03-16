@@ -22,7 +22,7 @@
         <infoPanel />
       </div>
     </div>
-    <cardSelectPanel />
+    <cardSelectPanel v-show="cardSelecdDialog" />
   </div>
 </template>
 <script>
@@ -40,7 +40,9 @@ export default {
   name: "index",
   mixins: [assist],
   data() {
-    return {}
+    return {
+      cardSelecdDialog: false
+    }
   },
   components: {
     equiInfoPanel,
@@ -64,13 +66,22 @@ export default {
     }
     this.initial()
   },
-  mounted() {},
+  mounted() {
+    this.gameReset()
+  },
   computed: {},
   watch: {},
   methods: {
-    battleStart() {
-      var player = new Player()
-      console.log(player.playerBaseAttr)
+    gameReset() {
+      this.cardSelecdDialog = true
+      let cardSelectPanel = this.findComponentDownward(this, "cardSelectPanel")
+      cardSelectPanel.selectCharacter()
+    },
+    hideCardSelecdPanel() {
+      this.cardSelecdDialog = false
+    },
+    contextmenu(e) {
+      // 鼠标右键
     },
 
     // 初始化rem
