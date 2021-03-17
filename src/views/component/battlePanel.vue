@@ -3,12 +3,12 @@
     <div class="button" style="position:fixed;" @click="battleStart">
       模拟战斗
     </div>
-    <div class="player">
+    <div class="player" v-if="JSON.stringify(PLAYER).length>2">
       <div class="player-hp">
         <div class="num">
-          <p class="chp">{{ playerFinalAttr.CURHP }}</p>
+          <p class="chp">{{ playerFinalAttr.attr.CURHP }}</p>
           /
-          <p class="fhp">{{ playerFinalAttr.MAXHP }}</p>
+          <p class="fhp">{{ playerFinalAttr.attr.MAXHP }}</p>
         </div>
         <div class="hpline">
           <div class="ahp" :style="{ width: playerHpLineLength + '%' }"></div>
@@ -17,8 +17,11 @@
       </div>
       <div class="player-tachie">
         <img
+          v-if="playerFinalAttr.tachie"
           :class="{ flicker: playerFlicker }"
-          src="../../assets/icons/tachie/play2.gif"
+          :src="
+            require('../../assets/icons/tachie/' + playerFinalAttr.tachie + '')
+          "
           alt=""
         />
       </div>
@@ -68,47 +71,44 @@ export default {
   components: {},
   data() {
     return {
-      attr: {},
+      playerAttr: {},
       playerFinalAttr: {
-        name: "player",
-        unitType: {
-          name: "英雄单位",
-          code: 1
-        },
-        //一级属性
-        MAXHP: 1000,
-        CURHP: 1000,
-        ATKMIN: 150, //攻击力
-        ATKMAX: 170, //攻击力
-        ARMOR: 28, //护甲
-        EVADE: 0.1, //闪避
-        ATKSPEED: 2.0, //每秒攻击次数
-        ATKSI: 0.6, //基础攻击间隔
-        ARP: 10, //穿甲
-        CRIT: 0.3, //暴击几率
-        CRITDMG: 1.5, //暴击伤害
-        HPRS: 1, //每秒生命恢复
-        HPSTEAL: 0, //生命偷取
-        // 二级属性
-        ATKSP: 0, //攻击速度加成
-        //人物属性
-        GOLD: 0, //拥有的金币
-        EXP: 0,
-        EXPNL: 100, //升到下一级需要的经验
-        LV: 30
+        // name: "player",
+        // unitType: {
+        //   name: "英雄单位",
+        //   code: 1
+        // },
+        // //一级属性
+        // MAXHP: 1000,
+        // CURHP: 1000,
+        // ATKMIN: 150, //攻击力
+        // ATKMAX: 170, //攻击力
+        // ARMOR: 28, //护甲
+        // EVADE: 0.1, //闪避
+        // ATKSPEED: 2.0, //每秒攻击次数
+        // ATKSI: 0.6, //基础攻击间隔
+        // ARP: 10, //穿甲
+        // CRIT: 0.3, //暴击几率
+        // CRITDMG: 1.5, //暴击伤害
+        // HPRS: 1, //每秒生命恢复
+        // HPSTEAL: 0, //生命偷取
+        // // 二级属性
+        // ATKSP: 0, //攻击速度加成
+        // //人物属性
+        // GOLD: 0, //拥有的金币
+        // EXP: 0,
+        // EXPNL: 100, //升到下一级需要的经验
+        // LV: 30
       },
       monstAttr: {
         name: "monster",
-        unitType: {
-          name: "英雄单位",
-          code: 1
-        },
+        unitType: 2,
         //一级属性
-        MAXHP: 2000,
-        CURHP: 2000,
-        ATKMIN: 200, //攻击力
-        ATKMAX: 230, //攻击力
-        ARMOR: 20, //护甲
+        MAXHP: 100,
+        CURHP: 100,
+        ATKMIN: 10, //攻击力
+        ATKMAX: 11, //攻击力
+        ARMOR: 2, //护甲
         EVADE: 0, //闪避
         ATKSPEED: 1, //每秒攻击次数
         ATKSI: 0.6, //基础攻击间隔
@@ -129,15 +129,24 @@ export default {
     }
   },
   props: ["item"],
-  mounted() {},
+  mounted() {
+  },
+  computed: {
+    PLAYER() {
+      this.playerFinalAttr = this.$store.state.PLAYER.playerFinalAttr
+      return this.$store.state.PLAYER
+    }
+  },
   watch: {
     playerFinalAttr: {
       handler() {
-        this.playerHpLineLength = parseInt(
-          (this.playerFinalAttr.CURHP / this.playerFinalAttr.MAXHP) * 100
-        )
+        try {
+          this.playerHpLineLength = parseInt(
+            (this.playerFinalAttr.attr.CURHP / this.playerFinalAttr.attr.MAXHP) * 100
+          )
+        } catch (error) {}
       },
-      immediate: true,
+      immediate: false,
       deep: true
     },
     monstAttr: {
@@ -146,13 +155,13 @@ export default {
           (this.monstAttr.CURHP / this.monstAttr.MAXHP) * 100
         )
       },
-      immediate: true,
+      immediate: false,
       deep: true
     }
   },
   methods: {
     battleStart() {
-      handle.combatCalculation(this.playerFinalAttr, this.monstAttr, this)
+      handle.combatCalculation(this.playerFinalAttr.attr, this.monstAttr, this)
     },
     showDmgInfo(v, type) {
       // let v = {
@@ -160,7 +169,7 @@ export default {
       //   msg: "MISS",
       //   show: true
       // }
-
+      
       switch (type) {
         case "player":
           this.playerHpChange.push(v)

@@ -74,14 +74,17 @@ const config = {
     CRIT: 0,
     CRITDMG: 1.5,
   },
-  unitType: [{
-    name: "英雄单位",
+  unitTypes: [{
+    name: "玩家单位",
     code: 1
-  }, {
-    name: "精英单位",
+  },{
+    name: "英雄单位",
     code: 2
   }, {
-    name: "普通单位",
+    name: "精英单位",
     code: 3
+  }, {
+    name: "普通单位",
+    code: 4
   }]
 }

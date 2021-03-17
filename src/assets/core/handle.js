@@ -42,8 +42,9 @@ function saveGame(){
 }
 function loadGame(){
   try {
-    let saveData = JSON.parse(decrypt(localStorage.getItem("_reSD")))
-    if(saveData){
+    let sd = localStorage.getItem("_reSD")
+    if(sd){
+      let saveData = JSON.parse(decrypt(sd))
       vuex.commit('set_player_attribute',saveData)
       return true
     }else{
@@ -97,7 +98,7 @@ function DMGCalculation(attacker, defender, component) {
     defender.CURHP = curHP
     info.msg = '-' + takeDmg
     //伤害结算
-    if (defender.name == 'player') {
+    if (defender.unitType == '1') {
       component.showDmgInfo(info, 'player')
       console.log("palyer tack dmg:" + takeDmg + ",剩余血量：" + defender.CURHP)
     } else {
@@ -107,7 +108,7 @@ function DMGCalculation(attacker, defender, component) {
 
     //战斗结束检测
     if (defender.CURHP <= 0 || attacker.CURHP <= 0) {
-      if (defender.type == 'player') {
+      if (defender.unitType == '0') {
         clearTimeout(combatTimer)
         return console.log('palyerDead')
       } else {

@@ -4,7 +4,7 @@
       <div class="l">
         <div class="lt">
           <div class="main-info">
-            <p class="playname">黑羽上弦灭弓</p>
+            <p class="playname" v-if="JSON.stringify(PLAYER).length>2">{{PLAYER.playerFinalAttr.name}}</p>
             <p class="time">00:00:00</p>
           </div>
           <div class="equi">
@@ -71,7 +71,11 @@ export default {
     console.log(loadStatu)
     loadStatu||this.gameReset()
   },
-  computed: {},
+  computed: {
+    PLAYER() {
+      return this.$store.state.PLAYER
+    }
+  },
   watch: {},
   methods: {
     gameReset() {
