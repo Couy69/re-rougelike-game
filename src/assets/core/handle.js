@@ -2,6 +2,7 @@ import {
   formula
 } from './formula';
 import CryptoJS from 'crypto-js';
+import vuex from '../../store'
 
 function deepCopy(data) {
   return JSON.parse(JSON.stringify(data))
@@ -33,6 +34,25 @@ function decrypt(data) {
 
 function numberFixed(num, places) {
   return Number(num.toFixed(places))
+}
+
+function saveGame(){
+  let saveData = encrypt(JSON.stringify(vuex.state.PLAYER))
+  localStorage.setItem('_reSD',saveData)
+}
+function loadGame(){
+  try {
+    let saveData = JSON.parse(decrypt(localStorage.getItem("_reSD")))
+    if(saveData){
+      vuex.commit('set_player_attribute',saveData)
+      return true
+    }else{
+      return false
+    } 
+  } catch (error) {
+    console.log(error)
+    return false
+  }
 }
 
 /**
@@ -120,5 +140,7 @@ export default {
   numberFixed,
   combatCalculation,
   encrypt,
-  decrypt
+  decrypt,
+  saveGame,
+  loadGame
 }

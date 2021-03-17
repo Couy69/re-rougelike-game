@@ -67,7 +67,9 @@ export default {
     this.initial()
   },
   mounted() {
-    this.gameReset()
+    let loadStatu = handle.loadGame()
+    console.log(loadStatu)
+    loadStatu||this.gameReset()
   },
   computed: {},
   watch: {},

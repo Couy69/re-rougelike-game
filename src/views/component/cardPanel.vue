@@ -21,6 +21,7 @@
 <script>
 import Player from "../../assets/core/player.js"
 import { assist } from "../../assets/js/assist"
+import handle from "@/assets/core/handle.js"
 export default {
   name: "cardSelectPanel",
   components: {},
@@ -59,6 +60,7 @@ export default {
       var p = this.findComponentUpward(this, 'index')
       p.hideCardSelecdPanel()
 
+      handle.saveGame()
     }
   }
 }
