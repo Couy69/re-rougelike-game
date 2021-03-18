@@ -36,20 +36,27 @@ function numberFixed(num, places) {
   return Number(num.toFixed(places))
 }
 
-function saveGame(){
+function saveGame() {
   let saveData = encrypt(JSON.stringify(vuex.state.PLAYER))
-  localStorage.setItem('_reSD',saveData)
+  localStorage.setItem('_reSD', saveData)
 }
-function loadGame(){
+
+function loadGame() {
   try {
     let sd = localStorage.getItem("_reSD")
-    if(sd){
+    if (sd) {
       let saveData = JSON.parse(decrypt(sd))
-      vuex.commit('set_player_attribute',saveData)
+      vuex.commit('set_player_attribute', saveData)
+      vuex.commit("set_sys_info", {
+        msg: `
+              已加载存档
+            `,
+        type: ""
+      })
       return true
-    }else{
+    } else {
       return false
-    } 
+    }
   } catch (error) {
     console.log(error)
     return false

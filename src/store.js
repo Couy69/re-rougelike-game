@@ -7,10 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     PLAYER: {},
-    sysInfo: [{
-      type: '',
-      msg: "😠"
-    }],
+    sysInfo: [],
   },
   mutations: {
     set_player_attribute(state, data) {
@@ -23,6 +20,12 @@ export default new Vuex.Store({
       this.state.playerAttribute.GOLD = parseInt(data);
     },
 
+    set_sys_info(state, data) {
+      this.state.sysInfo.push(data);
+      if (this.state.sysInfo.length > 30) {
+        this.state.sysInfo.shift()
+      }
+    },
     clear_sys_info(state, data) {
       this.state.sysInfo.splice(1, this.state.sysInfo.length)
     },

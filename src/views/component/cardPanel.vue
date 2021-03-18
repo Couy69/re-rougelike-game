@@ -55,12 +55,18 @@ export default {
       let player = new Player()
       player.setPlayerBaseAttr(this.data)
       player.setPlayerFinalAttribute()
-      this.$store.commit('set_player_attribute',player)
+      this.$store.commit("set_player_attribute", player)
 
-      var p = this.findComponentUpward(this, 'index')
+      var p = this.findComponentUpward(this, "index")
       p.hideCardSelecdPanel()
 
       handle.saveGame()
+      this.$store.commit("set_sys_info", {
+        msg: `
+              你记起了你的身份，${player.playerBaseAttr.name}
+            `,
+        type: "trophy"
+      })
     }
   }
 }
