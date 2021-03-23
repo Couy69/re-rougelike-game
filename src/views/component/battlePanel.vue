@@ -269,8 +269,9 @@ export default {
     animation: bezier ease-in 1s;
     p {
       transform: translateX(-50%);
-      text-shadow: 2px 3px 1px #000;
-      font-size: 18px;
+          text-shadow: 0px 0px 2px #000;
+    font-size: 18px;
+    color: #ff7d0d;
     }
   }
   .player-hp {

@@ -1,14 +1,14 @@
 <template>
   <div class="challengeMenu">
     <div class="menu">
-      <div class="Backpack" @click="openMenu('boss')">
+      <!-- <div class="Backpack" @click="openMenu('boss')">
         <img src="../../assets/icons/menu/1.png" alt="" />
         <span>boss挑战</span>
       </div>
       <div class="Backpack" @click="openMenu('relic')">
         <img src="../../assets/icons/menu/1.png" alt="" />
         <span>宝物挑战</span>
-      </div>
+      </div> -->
       <div class="Backpack" @click="openMenu('equi')">
         <img src="../../assets/icons/menu/1.png" alt="" />
         <span>装备挑战</span>
@@ -37,9 +37,11 @@
 </template>
 <script>
 import Player from "../../assets/core/player.js"
+import {dungeonsConfig} from "../../assets/config/dungeonsConfig.js"
 export default {
   name: "challengeMenu",
   components: {},
+  mixins:[dungeonsConfig],
   data() {
     return {
       currentMenu: {},
@@ -104,7 +106,17 @@ export default {
   watch: {},
   methods: {
     resetCurrentMonster(v){
-      console.log(v)
+      // console.log(v)
+      // console.log(this.currentMenu)
+      // console.log(this.dungeonsLoop)
+      try {
+        let monsterAttr = this.dungeonsConfig[this.currentMenu.type][v.name]
+        console.log(monsterAttr)
+        his.$store.commit("set_monster_attribute", monsterAttr)
+      } catch (error) {
+        
+      }
+      // this.$store.commit("set_monster_attribute", monster)
     },
     openMenu(type) {
       if(this.currentMenu.type == type){

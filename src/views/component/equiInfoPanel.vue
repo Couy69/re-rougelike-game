@@ -1,7 +1,9 @@
 <template>
   <div class="equiInfoPanel">
     <div class="cgrid">
-      <div class="grid grid-weapon"><equiItemPanel /></div>
+      <div class="grid grid-weapon">
+        <!-- <equiItemPanel /> -->
+      </div>
       <div class="grid grid-armor"></div>
       <div class="grid grid-ring"></div>
       <div class="grid grid-shoes"></div>

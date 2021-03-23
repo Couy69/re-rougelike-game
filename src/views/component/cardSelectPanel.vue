@@ -10,11 +10,11 @@
 </template>
 <script>
 import card from "./cardPanel"
-import {characterConfig} from "../../assets/config/characterConfig.js"
+import {dungeonsConfig} from "../../assets/config/dungeonsConfig.js"
 export default {
   name: "cardSelectPanel",
   components: { card },
-  mixins:[characterConfig],
+  mixins:[dungeonsConfig],
   data() {
     return {
       arr:[],
