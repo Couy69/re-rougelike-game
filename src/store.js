@@ -17,12 +17,21 @@ export default new Vuex.Store({
     set_monster_attribute(state, data) {
       this.state.MONSTER = data
     },
-    // set_player_gold(state, data) {
-    //   this.state.playerAttribute.GOLD += parseInt(data);
-    // },
-    // reset_player_gold(state, data) {
-    //   this.state.playerAttribute.GOLD = parseInt(data);
-    // },
+    set_player_curhp(state, data) {
+      var CURHP = this.state.PLAYER.playerFinalAttr.attr.CURHP,
+        MAXHP = this.state.PLAYER.playerFinalAttr.attr.MAXHP
+      if (data == 'dead') {
+        CURHP.value = 1
+      }else if(data == 'full'){
+        CURHP.value = MAXHP.value
+      }
+       else {
+        this.state.PLAYER.playerFinalAttr.attr.CURHP = Number(CURHP)+Math.round(Number(data));
+        if (this.state.PLAYER.playerFinalAttr.attr.CURHP > MAXHP) {
+          this.state.PLAYER.playerFinalAttr.attr.CURHP = MAXHP
+        }
+      }
+    },
 
     set_sys_info(state, data) {
       this.state.sysInfo.push(data);

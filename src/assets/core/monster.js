@@ -34,6 +34,7 @@ class Monster {
     this.monsterBaseAttr = data
   }
   setMonsterFinalAttribute() {
+    this.monsterBaseAttr.attr.CURHP = this.monsterBaseAttr.attr.MAXHP
     this.monsterFinalAttr = this.monsterBaseAttr
   }
 
