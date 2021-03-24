@@ -27,6 +27,9 @@
             "
             alt=""
           />
+          <div class="flicker-animation" v-if="playerFlicker">
+
+          </div>
         </div>
         <div class="dmg-font" v-for="v in playerHpChange" :key="v.id">
           <div v-if="v.show">
@@ -68,6 +71,9 @@
             "
             alt=""
           />
+           <div class="flicker-animation" v-if="monsterFlicker">
+
+          </div>
         </div>
         <div class="dmg-font" v-for="v in monsterHpChange" :key="v.id">
           <div v-if="v.show">
@@ -197,6 +203,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  // background: #000;
+  // box-shadow:0 0  2px 2px #222;
 }
 @keyframes bezier {
   0% {
@@ -322,11 +330,27 @@ width: 30%;
     animation: flicker 0.3s;
   }
 }
+.flicker-animation{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%)   scaleX(-1);
+    width: 100%;
+    height:100%;
+    background-position: 80% 100%;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-image: url(../../assets/img/animation/attack1.gif);
+    z-index: -1;
+  }
 .monster {
   .player-tachie {
     img {
       transform: scaleX(1);
     }
+  }
+  .flicker-animation{
+    transform: translate(-50%,-50%) !important;
   }
   .hpline {
     border: 2px solid #732727 !important;
