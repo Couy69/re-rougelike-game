@@ -19,9 +19,14 @@
       </div>
     </div>
     <div class="dialog" v-if="challengeMenuDialog">
-      <div class="title">{{currentMenu.name}}</div>
+      <div class="title">{{ currentMenu.name }}</div>
       <div class="dmenu">
-        <div class="item" v-for="v in currentMenu.menuList" :key="v.id" @click="resetCurrentMonster(v)">
+        <div
+          class="item"
+          v-for="v in currentMenu.menuList"
+          :key="v.id"
+          @click="resetCurrentMonster(v)"
+        >
           <div class="img">
             <div class="cover"></div>
             <img
@@ -36,12 +41,12 @@
   </div>
 </template>
 <script>
-import Player from "../../assets/core/player.js"
-import {dungeonsConfig} from "../../assets/config/dungeonsConfig.js"
+import Monster from "../../assets/core/monster.js"
+import { dungeonsConfig } from "../../assets/config/dungeonsConfig.js"
 export default {
   name: "challengeMenu",
   components: {},
-  mixins:[dungeonsConfig],
+  mixins: [dungeonsConfig],
   data() {
     return {
       currentMenu: {},
@@ -97,31 +102,39 @@ export default {
             tachie: "equi.gif"
           }
         ]
-      },
-      
+      }
     }
   },
   props: ["item"],
   mounted() {},
   watch: {},
   methods: {
-    resetCurrentMonster(v){
-      // console.log(v)
-      // console.log(this.currentMenu)
-      // console.log(this.dungeonsLoop)
+    resetCurrentMonster(v) {
       try {
         let monsterAttr = this.dungeonsConfig[this.currentMenu.type][v.name]
-        console.log(monsterAttr)
-        his.$store.commit("set_monster_attribute", monsterAttr)
+        let monster = new Monster()
+        monster.setMonsterBaseAttr(monsterAttr)
+        monster.setMonsterFinalAttribute()
+        this.$store.commit("set_monster_attribute", monster)
+        this.closeMenu()
       } catch (error) {
-        
+        this.$store.commit("set_sys_info", {
+          msg: `
+              副本属性解析错误
+            `,
+          type: "warning"
+        })
+        console.log(error)
       }
-      // this.$store.commit("set_monster_attribute", monster)
+    },
+    closeMenu() {
+      this.challengeMenuDialog = false
+      this.currentMenu = {}
     },
     openMenu(type) {
-      if(this.currentMenu.type == type){
+      if (this.currentMenu.type == type) {
         this.currentMenu = {}
-        return this.challengeMenuDialog = false
+        return (this.challengeMenuDialog = false)
       }
       this.challengeMenuDialog = true
       switch (type) {

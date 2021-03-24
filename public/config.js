@@ -1,6 +1,11 @@
+/**
+ * 游戏全局配置 global config
+ * @author couy69@gmail.com
+ */
+
 const config = {
-  secretKey: '123',
-  lvUpNeedExp: [
+  secretKey: '123', //存档密钥
+  lvUpNeedExp: [  //当前等级  所需总经验  升到下一级所需经验
     [1, 0, 230],
     [2, 230, 370],
     [3, 600, 480],
@@ -32,49 +37,7 @@ const config = {
     [29, 48545, 7500],
     [30, 56045, 0]
   ],
-  playerAttribute: {
-    name: 'player',
-    unitType: {
-      name: "英雄单位",
-      code: 1
-    },
-    //一级属性
-    MAXHP: 100,
-    CURHP: 100,
-    ATK: 10, //攻击力
-    ARMOR: 2, //护甲
-    EVADE: 0.5, //闪避
-    ATKSPEED: 1.5, //每秒攻击次数
-    ATKSI: 0.6, //基础攻击间隔
-    ARP: 1, //穿甲
-    CRIT: 0.3, //暴击几率
-    CRITDMG: 1.5, //暴击伤害
-    HPRS: 1, //每秒生命恢复
-    HPSTEAL: 0, //生命偷取
-    // 二级属性
-    ATKSP: 0, //攻击速度加成
-    //人物属性
-    EXP: 0,
-    EXPNL: 100, //升到下一级需要的经验
-    LV: 1,
-  },
-  monsterAttribute: {
-    type: 'monster',
-    unitType: {
-      name: "普通单位",
-      code: 3
-    },
-    MAXHP: 20000,
-    CURHP: 20000,
-    ATK: 800,
-    ARMOR: 200,
-    EVADE: 0,
-    ATKSPEED: 1,
-    ARP: 1,
-    CRIT: 0,
-    CRITDMG: 1.5,
-  },
-  unitTypes: [{
+  unitTypes: [{  //单位类型 有部分属性对不同单位类型计算结果不同
     name: "玩家单位",
     code: 1
   },{

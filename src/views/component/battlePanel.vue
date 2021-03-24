@@ -3,61 +3,78 @@
     <div class="button" style="position:fixed;" @click="battleStart">
       模拟战斗
     </div>
-    <div class="player" v-if="JSON.stringify(PLAYER).length>2">
-      <div class="player-hp">
-        <div class="num">
-          <p class="chp">{{ playerFinalAttr.attr.CURHP }}</p>
-          /
-          <p class="fhp">{{ playerFinalAttr.attr.MAXHP }}</p>
+    <div class="area">
+      <div class="player" v-if="JSON.stringify(PLAYER).length > 2">
+        <div class="player-hp">
+          <div class="num">
+            <p class="chp">{{ playerFinalAttr.attr.CURHP }}</p>
+            /
+            <p class="fhp">{{ playerFinalAttr.attr.MAXHP }}</p>
+          </div>
+          <div class="hpline">
+            <div class="ahp" :style="{ width: playerHpLineLength + '%' }"></div>
+            <div class="bhp" :style="{ width: playerHpLineLength + '%' }"></div>
+          </div>
         </div>
-        <div class="hpline">
-          <div class="ahp" :style="{ width: playerHpLineLength + '%' }"></div>
-          <div class="bhp" :style="{ width: playerHpLineLength + '%' }"></div>
+        <div class="player-tachie">
+          <img
+            v-if="playerFinalAttr.tachie"
+            :class="{ flicker: playerFlicker }"
+            :src="
+              require('../../assets/icons/tachie/' +
+                playerFinalAttr.tachie +
+                '')
+            "
+            alt=""
+          />
         </div>
-      </div>
-      <div class="player-tachie">
-        <img
-          v-if="playerFinalAttr.tachie"
-          :class="{ flicker: playerFlicker }"
-          :src="
-            require('../../assets/icons/tachie/' + playerFinalAttr.tachie + '')
-          "
-          alt=""
-        />
-      </div>
-      <div class="dmg-font" v-for="v in playerHpChange" :key="v.id">
-        <div v-if="v.show">
-          <p v-if="v.type == 'miss'">{{ v.msg }}</p>
-          <p v-if="v.type == 'crit'">⚡{{ v.msg }}</p>
-          <p v-if="v.type == 'normol'">{{ v.msg }}</p>
+        <div class="dmg-font" v-for="v in playerHpChange" :key="v.id">
+          <div v-if="v.show">
+            <p v-if="v.type == 'miss'">{{ v.msg }}</p>
+            <p v-if="v.type == 'crit'">⚡{{ v.msg }}</p>
+            <p v-if="v.type == 'normol'">{{ v.msg }}</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="player monster">
-      <div class="player-hp">
-        <div class="name">boss1号</div>
-        <div class="num">
-          <p class="chp">{{ monstAttr.CURHP }}</p>
-          /
-          <p class="fhp">{{ monstAttr.MAXHP }}</p>
+    <div class="area">
+      <div class="player monster" v-if="JSON.stringify(MONSTER).length > 2">
+        <div class="player-hp">
+          <div class="name">{{ monsterFinalAttr.name }}</div>
+          <div class="num">
+            <p class="chp">{{ monsterFinalAttr.attr.CURHP }}</p>
+            /
+            <p class="fhp">{{ monsterFinalAttr.attr.MAXHP }}</p>
+          </div>
+          <div class="hpline">
+            <div
+              class="ahp"
+              :style="{ width: monsterHpLineLength + '%' }"
+            ></div>
+            <div
+              class="bhp"
+              :style="{ width: monsterHpLineLength + '%' }"
+            ></div>
+          </div>
         </div>
-        <div class="hpline">
-          <div class="ahp" :style="{ width: monsterHpLineLength + '%' }"></div>
-          <div class="bhp" :style="{ width: monsterHpLineLength + '%' }"></div>
+        <div class="player-tachie">
+          <img
+            v-if="monsterFinalAttr.tachie"
+            :class="{ flicker: monsterFlicker }"
+            :src="
+              require('../../assets/icons/tachie/' +
+                monsterFinalAttr.tachie +
+                '')
+            "
+            alt=""
+          />
         </div>
-      </div>
-      <div class="player-tachie">
-        <img
-          :class="{ flicker: monsterFlicker }"
-          src="../../assets/icons/tachie/boss3.gif"
-          alt=""
-        />
-      </div>
-      <div class="dmg-font" v-for="v in monsterHpChange" :key="v.id">
-        <div v-if="v.show">
-          <p v-if="v.type == 'miss'">{{ v.msg }}</p>
-          <p v-if="v.type == 'crit'">⚡{{ v.msg }}</p>
-          <p v-if="v.type == 'normol'">{{ v.msg }}</p>
+        <div class="dmg-font" v-for="v in monsterHpChange" :key="v.id">
+          <div v-if="v.show">
+            <p v-if="v.type == 'miss'">{{ v.msg }}</p>
+            <p v-if="v.type == 'crit'">⚡{{ v.msg }}</p>
+            <p v-if="v.type == 'normol'">{{ v.msg }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -65,61 +82,15 @@
 </template>
 <script>
 import handle from "../../assets/core/handle.js"
-import player from "../../assets/core/player.js"
+import Monster from "../../assets/core/monster.js"
 export default {
   name: "battlePanel",
   components: {},
   data() {
     return {
       playerAttr: {},
-      playerFinalAttr: {
-        // name: "player",
-        // unitType: {
-        //   name: "英雄单位",
-        //   code: 1
-        // },
-        // //一级属性
-        // MAXHP: 1000,
-        // CURHP: 1000,
-        // ATKMIN: 150, //攻击力
-        // ATKMAX: 170, //攻击力
-        // ARMOR: 28, //护甲
-        // EVADE: 0.1, //闪避
-        // ATKSPEED: 2.0, //每秒攻击次数
-        // ATKSI: 0.6, //基础攻击间隔
-        // ARP: 10, //穿甲
-        // CRIT: 0.3, //暴击几率
-        // CRITDMG: 1.5, //暴击伤害
-        // HPRS: 1, //每秒生命恢复
-        // HPSTEAL: 0, //生命偷取
-        // // 二级属性
-        // ATKSP: 0, //攻击速度加成
-        // //人物属性
-        // GOLD: 0, //拥有的金币
-        // EXP: 0,
-        // EXPNL: 100, //升到下一级需要的经验
-        // LV: 30
-      },
-      monstAttr: {
-        name: "monster",
-        unitType: 2,
-        //一级属性
-        MAXHP: 100,
-        CURHP: 100,
-        ATKMIN: 10, //攻击力
-        ATKMAX: 11, //攻击力
-        ARMOR: 2, //护甲
-        EVADE: 0, //闪避
-        ATKSPEED: 1, //每秒攻击次数
-        ATKSI: 0.6, //基础攻击间隔
-        ARP: 0, //穿甲
-        CRIT: 0, //暴击几率
-        CRITDMG: 1.5, //暴击伤害
-        HPRS: 1, //每秒生命恢复
-        HPSTEAL: 0, //生命偷取
-        // 二级属性
-        ATKSP: 0 //攻击速度加成
-      },
+      playerFinalAttr: {},
+      monsterFinalAttr: {},
       playerHpChange: [],
       monsterHpChange: [],
       playerHpLineLength: 100,
@@ -129,12 +100,15 @@ export default {
     }
   },
   props: ["item"],
-  mounted() {
-  },
+  mounted() {},
   computed: {
     PLAYER() {
-      this.playerFinalAttr = this.$store.state.PLAYER.playerFinalAttr
+      this.playerFinalAttr = this.$store.state.PLAYER.playerFinalAttr||{}
       return this.$store.state.PLAYER
+    },
+    MONSTER() {
+      this.monsterFinalAttr = this.$store.state.MONSTER.monsterFinalAttr||{}
+      return this.$store.state.MONSTER
     }
   },
   watch: {
@@ -142,17 +116,24 @@ export default {
       handler() {
         try {
           this.playerHpLineLength = parseInt(
-            (this.playerFinalAttr.attr.CURHP / this.playerFinalAttr.attr.MAXHP) * 100
+            (this.playerFinalAttr.attr.CURHP /
+              this.playerFinalAttr.attr.MAXHP) *
+              100
           )
         } catch (error) {}
       },
       immediate: false,
       deep: true
     },
-    monstAttr: {
+    monsterFinalAttr: {
       handler() {
+        if(JSON.stringify(this.monsterFinalAttr).length<=2){
+          return
+        }
         this.monsterHpLineLength = parseInt(
-          (this.monstAttr.CURHP / this.monstAttr.MAXHP) * 100
+          (this.monsterFinalAttr.attr.CURHP /
+            this.monsterFinalAttr.attr.MAXHP) *
+            100
         )
       },
       immediate: false,
@@ -161,7 +142,11 @@ export default {
   },
   methods: {
     battleStart() {
-      handle.combatCalculation(this.playerFinalAttr.attr, this.monstAttr, this)
+      handle.combatCalculation(
+        this.playerFinalAttr.attr,
+        this.monsterFinalAttr.attr,
+        this
+      )
     },
     showDmgInfo(v, type) {
       // let v = {
@@ -169,7 +154,7 @@ export default {
       //   msg: "MISS",
       //   show: true
       // }
-      
+
       switch (type) {
         case "player":
           this.playerHpChange.push(v)
@@ -254,8 +239,12 @@ export default {
     opacity: 1;
   }
 }
+.area{
+width: 30%;
+  height: 100%;
+}
 .player {
-  width: 30%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -269,9 +258,9 @@ export default {
     animation: bezier ease-in 1s;
     p {
       transform: translateX(-50%);
-          text-shadow: 0px 0px 2px #000;
-    font-size: 18px;
-    color: #ff7d0d;
+      text-shadow: 0px 0px 2px #000;
+      font-size: 18px;
+      color: #ff7d0d;
     }
   }
   .player-hp {
