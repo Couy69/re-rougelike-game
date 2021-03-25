@@ -105,9 +105,9 @@ export default {
   },
   
   mounted() {
-    this.autoHealthRecovery = setInterval(() => {
-      this.$store.commit('set_player_curhp', this.attr.HPRS)
-    }, 1000)
+    // this.autoHealthRecovery = setInterval(() => {
+    //   this.$store.commit('set_player_curhp', this.attr.HPRS)
+    // }, 1000)
   },
   methods: {}
 }

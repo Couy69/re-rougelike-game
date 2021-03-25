@@ -12,10 +12,9 @@ export const dungeonsConfig = {
           lv1: {
             name: '循环挑战 lv1',
             tachie: 'lv1.gif',
-            exp: 20,
             attr: {
-              MAXHP: 60,
-              CURHP: 60,
+              MAXHP: 20,
+              CURHP: 20,
               ATKMIN: 5,
               ATKMAX: 7,
               ARMOR: 0,
@@ -30,12 +29,12 @@ export const dungeonsConfig = {
               unitType: 4,
               ATKSP: 0,
               LV: 1,
+              EXP:20,
             },
           },
           lv2: {
             name: '循环挑战 lv2',
             tachie: 'lv2.gif',
-            exp: 30,
             attr: {
               MAXHP: 260,
               CURHP: 260,
@@ -53,12 +52,12 @@ export const dungeonsConfig = {
               unitType: 4,
               ATKSP: 0,
               LV: 7,
+              EXP:30,
             },
           },
           lv3: {
             name: '循环挑战 lv3',
             tachie: 'lv3.gif',
-            exp: 40,
             attr: {
               MAXHP: 460,
               CURHP: 460,
@@ -76,12 +75,12 @@ export const dungeonsConfig = {
               unitType: 4,
               ATKSP: 0,
               LV: 13,
+              EXP:40,
             },
           },
           lv4: {
             name: '循环挑战 lv4',
             tachie: 'lv4.gif',
-            exp: 50,
             attr: {
               MAXHP: 660,
               CURHP: 660,
@@ -99,12 +98,12 @@ export const dungeonsConfig = {
               unitType: 4,
               ATKSP: 0,
               LV: 1,
+              EXP:50,
             },
           },
           lv5: {
             name: '循环挑战 lv5',
             tachie: 'lv5.gif',
-            exp: 60,
             attr: {
               MAXHP: 860,
               CURHP: 860,
@@ -122,6 +121,7 @@ export const dungeonsConfig = {
               unitType: 4,
               ATKSP: 0,
               LV: 1,
+              EXP:60,
             },
           },
         },

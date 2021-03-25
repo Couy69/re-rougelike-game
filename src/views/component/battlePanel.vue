@@ -306,11 +306,12 @@ width: 30%;
         z-index: 2;
         width: 100%;
         background: #67d83d;
+        transition: 0.1s;
       }
       .bhp {
         z-index: 1;
         position: absolute;
-        transition: 0.3s;
+        transition: 0.5s;
         top: 0;
         left: 0;
         width: 100%;

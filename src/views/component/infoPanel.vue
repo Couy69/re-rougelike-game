@@ -2,7 +2,7 @@
   <div class="sys-info">
       <!-- <div class="clear" @click="clearSysInfo">清除信息</div> -->
       <div id='sysInfo'>
-        <div class="info warning" :class="{warning:v.type=='warning',battle:v.type=='battle',win:v.type=='win',trophy:v.type=='trophy',}" v-for="(v,k) in sysInfo" :key="k">系统<i style="font-size:.12rem" v-if="v.time">({{v.time}})</i>：
+        <div class="info warning" :class="{red:v.type=='red',white:v.type=='white',orange:v.type=='orange',blue:v.type=='blue',green:v.type=='green',}" v-for="(v,k) in sysInfo" :key="k">系统<i style="font-size:.12rem" v-if="v.time">({{v.time}})</i>：
           <span>{{v.msg}}</span>
         </div>
       </div>
@@ -69,16 +69,19 @@ export default {
       text-decoration: underline;
       margin-left: 0.05rem;
     }
-    .warning > span {
+    .white > white {
+      color: #fafafa;
+    }
+    .red > span {
       color: #f90202;
     }
-    .battle > span {
+    .orange > span {
       color: #de8618;
     }
-    .win > span {
+    .blue > span {
       color: #24c4de;
     }
-    .trophy > span {
+    .green > span {
       color: #2fe20f;
     }
   }
