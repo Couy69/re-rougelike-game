@@ -3,7 +3,9 @@ import {
 } from './formula';
 import CryptoJS from 'crypto-js';
 import vuex from '../../store'
-import {equiAttributeWeapon} from '../config/equiAttributeWeapon'
+import {
+  equiAttributeWeapon
+} from '../config/equiAttributeWeapon'
 
 function deepCopy(data) {
   return JSON.parse(JSON.stringify(data))
@@ -98,7 +100,7 @@ function DMGCalculation(attacker, defender, component) {
       takeDmg = takeDmg * attacker.CRITDMG
       info.type = 'crit'
     }
-    
+
     //计算闪避
     if (evadeCalculation(attacker, defender)) {
       takeDmg = 0
@@ -111,7 +113,7 @@ function DMGCalculation(attacker, defender, component) {
     let curHP = (defender.CURHP - takeDmg) < 0 ? 0 : defender.CURHP - takeDmg
     defender.CURHP = curHP
     info.msg = '-' + takeDmg
-    
+
     //伤害结算，更新人物被击动画与血条动画
     if (defender.unitType == '1') {
       component.showDmgInfo(info, 'player')
@@ -141,8 +143,8 @@ function DMGCalculation(attacker, defender, component) {
   combatTimers.push(combatTimer)
 }
 
-function clearAllCombatTimer(){
-  combatTimers.map(item=>{
+function clearAllCombatTimer() {
+  combatTimers.map(item => {
     clearTimeout(item)
   })
 }
@@ -161,7 +163,7 @@ function critCalculation(attacker, defender) {
   }
 }
 
-function missionFail(){
+function missionFail() {
   // 结束副本挑战
   vuex.commit('set_monster_attribute', {})
   vuex.commit("set_sys_info", {
@@ -171,7 +173,8 @@ function missionFail(){
     type: "red"
   })
 }
-function missionSuccess(attr){
+
+function missionSuccess(attr) {
   equiGet(attr)
   vuex.commit("set_sys_info", {
     msg: `
@@ -185,27 +188,55 @@ function missionSuccess(attr){
  * 计算装备获取
  * @param {obj} attr 
  */
-function equiGet(attr){
-  let equiLv,equiQuality,equiType
+function equiGet(attr) {
+  let equiLv, equiQuality, equiType
   //计算装备等级，一般情况下为玩家等级，挑战低级副本会限定等级上限
   let monsterLv = attr.LV
   let plarLv = vuex.state.PLAYER.playerFinalAttr.attr.LV
-  equiLv = plarLv-monsterLv>5?monsterLv+5:plarLv
-  console.log('装备等级：'+equiLv)
-  
+  equiLv = plarLv - monsterLv > 5 ? monsterLv + 5 : plarLv
+  console.log('装备等级：' + equiLv)
+
   //根据副本类型计算获取的装备种类与稀有度
   let equiOutputProbability = config.configEquiOutputProbability[attr.unitType]
-  equiOutputProbability.map((item,index)=>{
-    if(getRandomNumber()<item){
-      equiQuality = index
-      equiCreate(equiLv,equiQuality)
+  equiOutputProbability.map((item, index) => {
+    if (getRandomNumber() < item) {
+      equiQuality = config.configEquiQuality[index]
+      // switch (key) {
+      //   case value:
+
+      //     break;
+
+      //   default:
+      //     break;
+      // }
+      equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
     }
   })
 }
 
-function equiCreate(equiLv,equiQuality){
-  console.log(equiLv,equiQuality)
-  console.log(equiAttributeWeapon.data())
+function equiCreate(equiLv, equiQuality, equiAttr) {
+  console.log(equiLv, equiQuality, equiAttr)
+  let equi = {}
+  equi.lv = equiLv
+  equi.itemType = equiAttr.type
+  equi.category = equiBaseAttr(equiLv, equiQuality, equiAttr)
+  console.log(equi)
+}
+
+function equiBaseAttr(equiLv, equiQuality, equiAttr) {
+  let category = equiAttr.category[Math.floor((Math.random() * equiAttr.category.length))]
+  category.entry.map(item => {
+    switch (item.type) {
+      case 'ATK':
+        var random = equiLv * item.valCoefficient + (Math.random() * equiLv / 2 + 1)
+        random = Math.ceil(random * equiQuality.qualityCoefficient)
+        item.value = random
+        break;
+      default:
+        break;
+    }
+  })
+  return category
 }
 
 export default {
