@@ -6,7 +6,7 @@
       ARMOR: 2, //护甲
       EVADE: 0.5, //闪避
       ATKSPEED: 1.5, //每秒攻击次数
-      ATKSI: 0.6, //基础攻击间隔
+      BAT: 0.6, //基础攻击间隔
       ARP: 1, //穿甲
       CRIT: 0.3, //暴击几率
       CRITDMG: 1.5, //暴击伤害
@@ -40,7 +40,7 @@
         每秒攻击次数：<span>{{ attr.ATKSPEED }}</span>
       </p>
       <p>
-        基础攻击间隔：<span>{{ attr.ATKSI }}</span>
+        基础攻击间隔：<span>{{ attr.BAT }}</span>
       </p>
       <p>
         闪避：<span>{{ attr.EVADE * 100 }}%</span>
@@ -72,7 +72,7 @@ export default {
         ARMOR: 0, //护甲
         EVADE: 0, //闪避
         ATKSPEED: 1, //每秒攻击次数
-        ATKSI: 1, //基础攻击间隔
+        BAT: 1, //基础攻击间隔
         ARP: 0, //穿甲
         CRIT: 0, //暴击几率
         CRITDMG: 1.5, //暴击伤害

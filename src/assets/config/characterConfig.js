@@ -19,7 +19,7 @@ export const characterConfig = {
             ARMOR: 0, //护甲
             EVADE: 0, //闪避
             ATKSPEED: 0.6, //每秒攻击次数
-            ATKSI: 0.6, //基础攻击间隔
+            BAT: 0.6, //基础攻击间隔
             ARP: 1, //穿甲
             CRIT: 0, //暴击几率
             CRITDMG: 1.5, //暴击伤害
@@ -55,7 +55,7 @@ export const characterConfig = {
             ARMOR: 0, //护甲
             EVADE: 0, //闪避
             ATKSPEED: 0.6, //每秒攻击次数
-            ATKSI: 0.6, //基础攻击间隔
+            BAT: 0.6, //基础攻击间隔
             ARP: 1, //穿甲
             CRIT: 0, //暴击几率
             CRITDMG: 1.5, //暴击伤害
@@ -90,7 +90,7 @@ export const characterConfig = {
             ARMOR: 0, //护甲
             EVADE: 0, //闪避
             ATKSPEED: 0.6, //每秒攻击次数
-            ATKSI: 0.6, //基础攻击间隔
+            BAT: 0.6, //基础攻击间隔
             ARP: 1, //穿甲
             CRIT: 0, //暴击几率
             CRITDMG: 1.5, //暴击伤害

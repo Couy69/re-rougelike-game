@@ -80,7 +80,7 @@ export default {
       ARMOR: 0,
       EVADE: 0,
       ATKSPEED: 1,
-      ATKSI: 1,
+      BAT: 1,
       ARP: 0,
       CRIT: 0,
       CRITDMG: 1.5,

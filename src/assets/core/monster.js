@@ -15,7 +15,7 @@ class Monster {
       // ARMOR: 2, //护甲
       // EVADE: 0.5, //闪避
       // ATKSPEED: 1.5, //每秒攻击次数
-      // ATKSI: 0.6, //基础攻击间隔
+      // BAT: 0.6, //基础攻击间隔
       // ARP: 1, //穿甲
       // CRIT: 0.3, //暴击几率
       // CRITDMG: 1.5, //暴击伤害

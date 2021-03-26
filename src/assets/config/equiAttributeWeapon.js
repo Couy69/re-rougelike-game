@@ -6,9 +6,9 @@
 export const equiAttributeWeapon = {
   data() {
     return {
-      type:{
-        name:"武器",
-        code:'weapon'
+      type: {
+        name: "武器",
+        code: 'weapon'
       },
       category: [{
         name: '狱岩石太刀',
@@ -26,19 +26,25 @@ export const equiAttributeWeapon = {
           'valCoefficient': 1.8,
           type: 'ATK',
           'name': '攻击力'
-        }, {
-          type: 'CRIT',
-          'valCoefficient': 1.5,
-          'name': '暴击率'
-        }, {
-          'valCoefficient': 1.3,
-          type: 'CRITDMG',
-          'name': '暴击伤害'
         }]
       }],
       extraEntry: [{
         type: 'ATK',
-        'name': '攻击力'
+        name: '攻击力',
+      },{
+        type: 'CRIT',
+        name: '暴击率',
+        unit:'percent'
+      },{
+        type: 'ARP',
+        name: '无视护甲',
+      },{
+        type: 'CRITDMG',
+        name: '暴击伤害',
+        unit:'percent'
+      },{
+        type: 'ATKSP',
+        name: '攻击速度',
       }]
     }
   },
