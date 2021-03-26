@@ -1,8 +1,3 @@
-/**
- * 游戏全局配置 global config
- * @author couy69@gmail.com
- */
-
 const config = {
   secretKey: '123', //存档密钥
   lvUpNeedExp: [  //当前等级  所需总经验  升到下一级所需经验
@@ -49,5 +44,31 @@ const config = {
   }, {
     name: "普通单位",
     code: 4
-  }]
+  }],
+  configEquiQuality: [{
+    name: '普通',
+    qualityCoefficient: 0.8,
+    color: '#fff',
+    extraEntryNum: 1,
+  }, {
+    name: '稀有',
+    qualityCoefficient: 1,
+    color: '#fff',
+    extraEntryNum: 2,
+  }, {
+    name: '史诗',
+    qualityCoefficient: 1.15,
+    color: '#ff00ff',
+    extraEntryNum: 3,
+  }, {
+    name: '唯一',
+    qualityCoefficient: 1.3,
+    color: '#f78918',
+    extraEntryNum: 3,
+  }],
+  configEquiOutputProbability:{
+    2:[0,1,1,1],
+    3:[1,1,0.5,0.2],
+    4:[1,0.2,0.08,0],
+  }
 }

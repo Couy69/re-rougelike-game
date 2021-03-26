@@ -3,6 +3,7 @@ import {
 } from './formula';
 import CryptoJS from 'crypto-js';
 import vuex from '../../store'
+import {equiAttributeWeapon} from '../config/equiAttributeWeapon'
 
 function deepCopy(data) {
   return JSON.parse(JSON.stringify(data))
@@ -171,12 +172,40 @@ function missionFail(){
   })
 }
 function missionSuccess(attr){
+  equiGet(attr)
   vuex.commit("set_sys_info", {
     msg: `
           你获胜了，获得了${attr.EXP}点经验
         `,
     type: "green"
   })
+}
+
+/**
+ * 计算装备获取
+ * @param {obj} attr 
+ */
+function equiGet(attr){
+  let equiLv,equiQuality,equiType
+  //计算装备等级，一般情况下为玩家等级，挑战低级副本会限定等级上限
+  let monsterLv = attr.LV
+  let plarLv = vuex.state.PLAYER.playerFinalAttr.attr.LV
+  equiLv = plarLv-monsterLv>5?monsterLv+5:plarLv
+  console.log('装备等级：'+equiLv)
+  
+  //根据副本类型计算获取的装备种类与稀有度
+  let equiOutputProbability = config.configEquiOutputProbability[attr.unitType]
+  equiOutputProbability.map((item,index)=>{
+    if(getRandomNumber()<item){
+      equiQuality = index
+      equiCreate(equiLv,equiQuality)
+    }
+  })
+}
+
+function equiCreate(equiLv,equiQuality){
+  console.log(equiLv,equiQuality)
+  console.log(equiAttributeWeapon.data())
 }
 
 export default {
@@ -187,5 +216,6 @@ export default {
   encrypt,
   decrypt,
   saveGame,
-  loadGame
+  loadGame,
+  equiGet
 }

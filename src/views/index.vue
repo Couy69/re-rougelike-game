@@ -4,7 +4,9 @@
       <div class="l">
         <div class="lt">
           <div class="main-info">
-            <p class="playname" v-if="JSON.stringify(PLAYER).length>2">{{PLAYER.playerFinalAttr.name}}</p>
+            <p class="playname" v-if="JSON.stringify(PLAYER).length > 2">
+              {{ PLAYER.playerFinalAttr.name }}
+            </p>
             <p class="time">00:00:00</p>
           </div>
           <div class="equi">
@@ -69,7 +71,26 @@ export default {
   mounted() {
     let loadStatu = handle.loadGame()
     console.log(loadStatu)
-    loadStatu||this.gameReset()
+    loadStatu || this.gameReset()
+    handle.equiGet({
+      MAXHP: 20,
+      CURHP: 20,
+      ATKMIN: 5,
+      ATKMAX: 7,
+      ARMOR: 0,
+      EVADE: 0,
+      ATKSPEED: 1,
+      ATKSI: 1,
+      ARP: 0,
+      CRIT: 0,
+      CRITDMG: 1.5,
+      HPRS: 0,
+      HPSTEAL: 0,
+      unitType: 4,
+      ATKSP: 0,
+      LV: 1,
+      EXP: 20
+    })
   },
   computed: {
     PLAYER() {
