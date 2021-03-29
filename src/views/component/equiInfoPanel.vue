@@ -10,7 +10,13 @@
       <!-- <equiItemPanel /> -->
     </div>
     <div class="bgrid">
-      <div v-for="(v, k) in grids" :key="k"><div class="grid"></div></div>
+      <div v-for="(v, k) in backpackGrids" :key="k">
+        <div class="grid">
+          <div v-if="JSON.stringify(v) != '{}'">
+            <equiItemPanel :item="v" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,15 +27,30 @@ export default {
   components: { equiItemPanel },
   data() {
     return {
-      grids: {}
     }
   },
   props: ["item"],
-  created() {
-    this.grids = new Array(24).fill({})
+  created() {},
+  computed: {
+    backpackGrids() {
+      return JSON.parse(this.$store.state.backpackGrids)
+    }
   },
-  mounted() {},
-  watch: {},
+  
+  mounted() {
+    // setInterval(()=>{
+    //   console.log(this.backpackGrids)
+    // },1000)
+  },
+  // watch: {
+  //   Grids: {
+  //     handler() {
+  //       this.backpackGrids = JSON.parse(JSON.stringify(this.Grids))
+  //     },
+  //     immediate: false,
+  //     deep: true
+  //   }
+  // },
   methods: {}
 }
 </script>
@@ -86,7 +107,7 @@ export default {
   height: 200px;
   display: flex;
   flex-wrap: wrap;
-  .grid{
+  .grid {
     border-radius: 0px;
   }
 }

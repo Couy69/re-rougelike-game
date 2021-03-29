@@ -48,7 +48,7 @@ export const formula = {
      * 词条计算并返回
      * @param {num} lv 物品等级
      * @param {num} valCoefficient 属性影响常数
-     * @param {num} qualityCoefficient 质量影响常数
+     * @param {num} qualityCoefficient 装备品质影响常数
      * @returns 
      */
     baseEntryFormula: (lv, valCoefficient, qualityCoefficient,base=0) => {

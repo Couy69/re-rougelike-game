@@ -70,7 +70,6 @@ export default {
   },
   mounted() {
     let loadStatu = handle.loadGame()
-    console.log(loadStatu)
     loadStatu || this.gameReset()
     handle.equiGet({
       MAXHP: 20,

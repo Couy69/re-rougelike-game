@@ -2,7 +2,7 @@
   <div class="equi">
     <div
       class="eicon"
-      v-if="equi.lv"
+      v-if="JSON.stringify(equi) != '{}'"
       @contextmenu.prevent="openMenu(k, $event)"
       @mouseover="showItemInfo($event, equi.itemType, equi)"
       @mouseleave="closeItemInfo"
@@ -11,7 +11,7 @@
         class="icon"
         :style="{ 'box-shadow': 'inset 0 0 7px 2px ' + equi.quality.color }"
       >
-        <img :src="equi.type.iconSrc" alt="" />
+        <img :src="equi.category.iconSrc" alt="" />
       </div>
     </div>
     <div
@@ -28,10 +28,10 @@
           }"
           :style="{ 'box-shadow': 'inset 0 0 7px 2px ' + equi.quality.color }"
         >
-          <img :src="equi.type.iconSrc" alt="" />
+          <img :src="equi.category.iconSrc" alt="" />
         </div>
         <div class="name" :style="{ color: equi.quality.color }">
-          {{ equi.type.name }}
+          {{ equi.category.name }}
           {{ equi.enchantlvl ? "(+" + equi.enchantlvl + ")" : "" }}
         </div>
       </div>
@@ -43,7 +43,7 @@
         <div>lv{{ equi.lv }}</div>
       </div>
       <div class="entry">
-        <div v-for="v in equi.type.entry" :key="v.id">
+        <div v-for="v in equi.category.entry" :key="v.id">
           <div>{{ v.name }} : {{ v.value }}</div>
         </div>
       </div>
@@ -56,72 +56,68 @@
   </div>
 </template>
 <script>
-import { equiAttributeWeapon } from "@/assets/config/equiAttributeWeapon"
-// import {equiAttributeArmor} from '@/assets/config/equiAttributeArmor'
-// import {equiAttributeRing} from '@/assets/config/equiAttributeRing'
-// import {equiAttributeShoes} from '@/assets/config/equiAttributeShoes'
 export default {
-  name: "equiPanel",
-  // mixins: [equiAttributeWeapon,equiAttributeArmor,equiAttributeRing,equiAttributeShoes],
-  mixins: [equiAttributeWeapon],
+  name: "equiItem",
   data() {
     return {
       itemDialogStyle: { display: "none" },
       equi: {
-        itemType: "weapon",
-        quality: {
-          name: "史诗",
-          qualityCoefficient: 1.5,
-          probability: "0.15",
-          color: "#f78918",
-          extraEntryNum: 3
-        },
-        lv: 1,
-        type: {
-          name: "赤柳血刃",
-          iconSrc: "./icons/U_Sword09.png",
-          entry: [
-            {
-              valCoefficient: 1.3,
-              value: 3,
-              showVal: "+3",
-              type: "ATK",
-              name: "攻击力"
-            },
-            {
-              type: "HP",
-              valCoefficient: 1.1,
-              value: 18,
-              showVal: "+18",
-              name: "生命值"
-            }
-          ]
-        },
-        extraEntry: [
-          {
-            type: "DEF",
-            value: 1,
-            showVal: "+1",
-            name: "防御力"
-          },
-          {
-            value: "6.23",
-            showVal: "+6.23%",
-            type: "ATKPERCENT",
-            name: "攻击力"
-          },
-          {
-            type: "HP",
-            value: 4,
-            showVal: "+4",
-            name: "生命值"
-          }
-        ]
+        // itemType: "weapon",
+        // quality: {
+        //   name: "史诗",
+        //   qualityCoefficient: 1.5,
+        //   probability: "0.15",
+        //   color: "#f78918",
+        //   extraEntryNum: 3
+        // },
+        // lv: 1,
+        // type: {
+        //   name: "赤柳血刃",
+        //   iconSrc: "./icons/U_Sword09.png",
+        //   entry: [
+        //     {
+        //       valCoefficient: 1.3,
+        //       value: 3,
+        //       showVal: "+3",
+        //       type: "ATK",
+        //       name: "攻击力"
+        //     },
+        //     {
+        //       type: "HP",
+        //       valCoefficient: 1.1,
+        //       value: 18,
+        //       showVal: "+18",
+        //       name: "生命值"
+        //     }
+        //   ]
+        // },
+        // extraEntry: [
+        //   {
+        //     type: "DEF",
+        //     value: 1,
+        //     showVal: "+1",
+        //     name: "防御力"
+        //   },
+        //   {
+        //     value: "6.23",
+        //     showVal: "+6.23%",
+        //     type: "ATKPERCENT",
+        //     name: "攻击力"
+        //   },
+        //   {
+        //     type: "HP",
+        //     value: 4,
+        //     showVal: "+4",
+        //     name: "生命值"
+        //   }
+        // ]
       }
     }
   },
   props: ["item"],
-  mounted() {},
+  mounted() {
+    this.equi = this.$deepCopy(this.item)
+  },
   watch: {
     item() {
       this.equi = this.$deepCopy(this.item)

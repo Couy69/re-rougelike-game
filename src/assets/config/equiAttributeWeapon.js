@@ -18,7 +18,7 @@ export const equiAttributeWeapon = {
           type: 'ATK',
           name: '攻击力'
         },{
-          valCoefficient: 1,
+          valCoefficient: 4,
           type: 'ATKSP',
           name: '攻击速度',
         }]

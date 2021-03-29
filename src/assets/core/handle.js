@@ -6,6 +6,7 @@ import vuex from '../../store'
 import {
   equiAttributeWeapon
 } from '../config/equiAttributeWeapon'
+import equiInfoVueInstance from '@/views/component/equiInfoPanel'
 
 function deepCopy(data) {
   return JSON.parse(JSON.stringify(data))
@@ -217,9 +218,11 @@ function equiCreate(equiLv, equiQuality, equiAttr) {
   let equi = {}
   equi.lv = equiLv
   equi.itemType = equiAttr.type
+  equi.quality = equiQuality
   equi.category = equiBaseAttr(equiLv, equiQuality, equiAttr)
   equi.extraEntry = equiExtraEntry(equiLv, equiQuality, equiAttr)
   console.log(equi)
+  vuex.commit('add_backpack_equi', equi)
 }
 
 function equiBaseAttr(equiLv, equiQuality, equiAttr) {
@@ -308,7 +311,6 @@ function equiExtraEntry(equiLv, equiQuality, equiAttr) {
     item.min = entry.min
     item.max = entry.max
   })
-  console.log(b)
   return b
 }
 
