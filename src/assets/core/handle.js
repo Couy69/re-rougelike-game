@@ -194,7 +194,6 @@ function equiGet(attr) {
   let monsterLv = attr.LV
   let plarLv = vuex.state.PLAYER.playerFinalAttr.attr.LV
   equiLv = plarLv - monsterLv > 5 ? monsterLv + 5 : plarLv
-  console.log('装备等级：' + equiLv)
 
   //根据副本类型计算获取的装备种类与稀有度
   let equiOutputProbability = config.configEquiOutputProbability[attr.unitType]
@@ -215,29 +214,104 @@ function equiGet(attr) {
 }
 
 function equiCreate(equiLv, equiQuality, equiAttr) {
-  console.log(equiLv, equiQuality, equiAttr)
   let equi = {}
   equi.lv = equiLv
   equi.itemType = equiAttr.type
   equi.category = equiBaseAttr(equiLv, equiQuality, equiAttr)
+  equi.extraEntry = equiExtraEntry(equiLv, equiQuality, equiAttr)
   console.log(equi)
 }
 
 function equiBaseAttr(equiLv, equiQuality, equiAttr) {
-  let category = equiAttr.category[Math.floor((Math.random() * equiAttr.category.length))]
+  let category = equiAttr.category[Math.floor((Math.random() * equiAttr.category.length))],
+    entry
   category.entry.map(item => {
+    item.valCoefficient = item.unit == 'percent' ? item.valCoefficient / 100 : item.valCoefficient
     switch (item.type) {
       case 'ATK':
-        var random = equiLv * item.valCoefficient + (Math.random() * equiLv / 2 + 1)
-        random = Math.ceil(random * equiQuality.qualityCoefficient)
-        item.value = random
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
+        break;
+      case 'ARP':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
+        break;
+      case 'ARMOR':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
+        break;
+      case 'HPRS':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
+        break;
+      case 'ATKSP':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
+        break;
+      case 'EVADE':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient,0.05)
+        break;
+      case 'HPSTEAL':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.02)
+        break;
+      case 'CRIT':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.05)
+        break;
+      case 'CRITDMG':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.1)
         break;
       default:
         break;
     }
+    item.value = entry.value
+    item.min = entry.min
+    item.max = entry.max
   })
   return category
 }
+
+function equiExtraEntry(equiLv, equiQuality, equiAttr) {
+  let n = equiQuality.extraEntryNum, extraEntry = [], lv = equiLv,entry
+  for (let i = 0; i < n; i++) {
+    var index = Math.floor((Math.random() * equiAttr.extraEntry.length));
+    extraEntry.push(equiAttr.extraEntry[index])
+  }
+  var b = deepCopy(extraEntry)
+  b.map(item=>{
+    switch (item.type) {
+      case 'ATK':
+        entry = formula.methods.baseEntryFormula(equiLv, config.ATK_C, equiQuality.qualityCoefficient)
+        break;
+      case 'ARP':
+        entry = formula.methods.baseEntryFormula(equiLv, config.ARP_C, equiQuality.qualityCoefficient)
+        break;
+      case 'ARMOR':
+        entry = formula.methods.baseEntryFormula(equiLv, config.ARMOR_C, equiQuality.qualityCoefficient)
+        break;
+      case 'HPRS':
+        entry = formula.methods.baseEntryFormula(equiLv, config.HPRS_C, equiQuality.qualityCoefficient)
+        break;
+      case 'ATKSP':
+        entry = formula.methods.baseEntryFormula(equiLv, config.ATKSP_C, equiQuality.qualityCoefficient)
+        break;
+      case 'EVADE':
+        entry = formula.methods.baseEntryFormula(equiLv, config.EVADE_C/100, equiQuality.qualityCoefficient,0.05)
+        break;
+      case 'HPSTEAL':
+        entry = formula.methods.baseEntryFormula(equiLv, config.HPSTEAL_C/100, equiQuality.qualityCoefficient, 0.02)
+        break;
+      case 'CRIT':
+        entry = formula.methods.baseEntryFormula(equiLv, config.CRIT_C/100, equiQuality.qualityCoefficient, 0.05)
+        break;
+      case 'CRITDMG':
+        entry = formula.methods.baseEntryFormula(equiLv, config.CRITDMG_C/100, equiQuality.qualityCoefficient, 0.1)
+        break;
+      default:
+        break;
+    }
+    item.value = entry.value
+    item.min = entry.min
+    item.max = entry.max
+  })
+  console.log(b)
+  return b
+}
+
 
 export default {
   deepCopy,

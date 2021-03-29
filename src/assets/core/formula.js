@@ -42,6 +42,30 @@ export const formula = {
     evadeFormula: (evadeNow, evadeNew) => {
       let evade = 1 - (1 - evadeNow) * (1 - evadeNew)
       return Number(evade.toFixed(2))
-    }
+    },
+
+    /**
+     * 词条计算并返回
+     * @param {num} lv 物品等级
+     * @param {num} valCoefficient 属性影响常数
+     * @param {num} qualityCoefficient 质量影响常数
+     * @returns 
+     */
+    baseEntryFormula: (lv, valCoefficient, qualityCoefficient,base=0) => {
+      let entry = {
+          value: 0,
+          min: 0,
+          max: 0,
+        },
+        min, max, random;
+      
+      random = ((lv+Math.random() * lv / 5) * valCoefficient)+base
+      min = (lv) * valCoefficient+base
+      max = (lv+lv / 5) * valCoefficient+base
+      entry.min = Number((min * qualityCoefficient).toFixed(2))
+      entry.max = Number((max * qualityCoefficient).toFixed(2))
+      entry.value = Number((random * qualityCoefficient).toFixed(2))
+      return entry
+    },
   }
 };
