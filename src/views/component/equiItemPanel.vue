@@ -3,13 +3,17 @@
     <div
       class="eicon"
       v-if="JSON.stringify(equi) != '{}'"
-      @contextmenu.prevent="openMenu(k, $event)"
+      @contextmenu.prevent="openMenu($event)"
       @mouseover="showItemInfo($event, equi.itemType, equi)"
       @mouseleave="closeItemInfo"
     >
       <div
         class="icon"
-        :class="{lv2: equi.quality.name == '稀有',lv3: equi.quality.name == '史诗',lv4: equi.quality.name == '唯一'}"
+        :class="{
+          lv2: equi.quality.name == '稀有',
+          lv3: equi.quality.name == '史诗',
+          lv4: equi.quality.name == '唯一'
+        }"
         :style="{ 'box-shadow': 'inset 0 0 7px 2px ' + equi.quality.color }"
       >
         <img :src="equi.category.iconSrc" alt="" />
@@ -26,7 +30,9 @@
           :class="{
             'red-flash': equi.enchantlvl >= 13,
             unique: equi.quality.name == '独特',
-            lv2: equi.quality.name == '稀有',lv3: equi.quality.name == '史诗',lv4: equi.quality.name == '唯一'
+            lv2: equi.quality.name == '稀有',
+            lv3: equi.quality.name == '史诗',
+            lv4: equi.quality.name == '唯一'
           }"
           :style="{ 'box-shadow': 'inset 0 0 7px 2px ' + equi.quality.color }"
         >
@@ -46,14 +52,26 @@
       </div>
       <div class="entry">
         <div v-for="v in equi.category.entry" :key="v.id">
-          <div v-if="v.unit=='percent'">{{ v.name }} : {{ Math.round(v.value*100) }}%</div>
-          <div v-else>{{ v.name }} : {{ (v.value) }}</div>
+          <div v-if="v.unit == 'percent'">
+            {{ v.name }} : {{ Math.round(v.value * 100) }}%
+            <span class="value-info">({{ Math.round(v.min * 100) }}%-{{ Math.round(v.max * 100) }}%) </span>
+          </div>
+          <div v-else>
+            {{ v.name }} : {{ v.value }}
+            <span class="value-info">({{ v.min }}-{{ v.max }}) </span>
+          </div>
         </div>
       </div>
       <div class="extraEntry">
         <div v-for="v in equi.extraEntry" :key="v.id">
-          <div v-if="v.unit=='percent'">{{ v.name }} : {{ Math.round(v.value*100) }}%</div>
-          <div v-else>{{ v.name }} : {{ (v.value) }}</div>
+          <div v-if="v.unit == 'percent'">
+            {{ v.name }} : {{ Math.round(v.value * 100) }}%
+            <span class="value-info">({{ Math.round(v.min * 100) }}%-{{ Math.round(v.max * 100) }}%) </span>
+          </div>
+          <div v-else>
+            {{ v.name }} : {{ v.value }}
+            <span class="value-info">({{ v.min }}-{{ v.max }}) </span>
+          </div>
         </div>
       </div>
     </div>
@@ -290,6 +308,7 @@ export default {
 <style lang="scss" scoped>
 * {
   box-sizing: border-box;
+  font-size: 15px;
 }
 .eicon {
   display: flex;
@@ -314,15 +333,20 @@ export default {
     height: 85%;
   }
 }
-.icon.lv2{
+.icon.lv2 {
   background-image: url(../../assets/img/border/sp1.png);
 }
-.icon.lv3{
+.icon.lv3 {
   background-image: url(../../assets/img/border/sp6.png);
 }
-.icon.lv4{
+.icon.lv4 {
   background-size: 120%;
   background-image: url(../../assets/img/border/sp7.png);
+}
+.value-info{
+  font-size: 13px;
+  color:#888;
+  margin-left: 6px;
 }
 .eicon {
   .icon {
@@ -336,7 +360,7 @@ export default {
 }
 .equiItemPanel {
   color: #f1f1f1;
-  width: 2rem;
+  width: 2.8rem;
   height: auto;
   background: rgba(0, 0, 0, 0.8);
   border: #393839;

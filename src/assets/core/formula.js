@@ -59,9 +59,9 @@ export const formula = {
         },
         min, max, random;
       
-      random = ((lv+Math.random() * lv / 5) * valCoefficient)+base
+      random = ((lv+Math.random() * lv / 3) * valCoefficient)+base
       min = (lv) * valCoefficient+base
-      max = (lv+lv / 5) * valCoefficient+base
+      max = (lv+lv / 3) * valCoefficient+base
       entry.min = Number((min * qualityCoefficient).toFixed(2))
       entry.max = Number((max * qualityCoefficient).toFixed(2))
       entry.value = Number((random * qualityCoefficient).toFixed(2))

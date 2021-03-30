@@ -68,7 +68,7 @@ export const equiAttributeRing = {
           type: 'ATK',
           name: '攻击力'
         },{
-          valCoefficient: 1,
+          valCoefficient: 0.3,
           type: 'ARP',
           name: '无视护甲',
         }]

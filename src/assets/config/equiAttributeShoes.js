@@ -18,7 +18,7 @@ export const equiAttributeShoes = {
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 4,
+          valCoefficient: 2,
           type: 'ATKSP',
           name: '攻击速度',
         }]
@@ -43,7 +43,7 @@ export const equiAttributeShoes = {
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 4,
+          valCoefficient: 5,
           type: 'HP',
           name: '生命上限',
         }]
@@ -56,7 +56,7 @@ export const equiAttributeShoes = {
           name: '护甲'
         }, {
           valCoefficient: 0.4,
-          EVADE: 'EVADE',
+          type: 'EVADE',
           name: '闪避',
           unit: 'percent'
         }]
@@ -80,7 +80,7 @@ export const equiAttributeShoes = {
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 0.8,
+          valCoefficient: 0.2,
           type: 'ARP',
           name: '无视护甲',
         }]
@@ -91,27 +91,28 @@ export const equiAttributeShoes = {
         entry: [{
           valCoefficient: 1.8,
           type: 'EVADE',
-          name: '闪避'
+          name: '闪避',
+          unit: 'percent'
         }]
       }],
       extraEntry: [{
         type: 'ATK',
         name: '攻击力',
-      },{
+      }, {
         type: 'CRIT',
         name: '暴击率',
-        unit:'percent'
-      },{
+        unit: 'percent'
+      }, {
         type: 'ARP',
         name: '无视护甲',
-      },{
+      }, {
         type: 'CRITDMG',
         name: '暴击伤害',
-        unit:'percent'
-      },{
+        unit: 'percent'
+      }, {
         type: 'ATKSP',
         name: '攻击速度',
-      },{
+      }, {
         type: 'ARMOR',
         name: '护甲',
       }, {
@@ -123,7 +124,7 @@ export const equiAttributeShoes = {
       }, {
         type: 'EVADE',
         name: '闪避',
-        unit:'percent'
+        unit: 'percent'
       }]
     }
   },

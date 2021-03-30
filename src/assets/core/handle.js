@@ -220,15 +220,16 @@ function equiGet(attr) {
       //     break;
       // }
       let random = Math.random()
-      if(random<0.25){
-        equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
-      }else if(random>=0.25&&random<0.5){
-        equiCreate(equiLv, equiQuality, equiAttributeArmor.data())
-      }else if(random>=0.5&&random<0.75){
-        equiCreate(equiLv, equiQuality, equiAttributeRing.data())
-      }else{
-        equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
-      }
+      // if(random<0.25){
+      //   equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
+      // }else if(random>=0.25&&random<0.5){
+      //   equiCreate(equiLv, equiQuality, equiAttributeArmor.data())
+      // }else if(random>=0.5&&random<0.75){
+      //   equiCreate(equiLv, equiQuality, equiAttributeRing.data())
+      // }else{
+      //   equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
+      // }
+      equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
     }
   })
 }
@@ -252,6 +253,9 @@ function equiBaseAttr(equiLv, equiQuality, equiAttr) {
       case 'ATK':
         entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
         break;
+      case 'HP':
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
+        break;
       case 'ARP':
         entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
         break;
@@ -265,10 +269,10 @@ function equiBaseAttr(equiLv, equiQuality, equiAttr) {
         entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
         break;
       case 'EVADE':
-        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.05)
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.03)
         break;
       case 'HPSTEAL':
-        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.02)
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.01)
         break;
       case 'CRIT':
         entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.05)
