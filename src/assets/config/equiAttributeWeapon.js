@@ -100,6 +100,10 @@ export const equiAttributeWeapon = {
       },{
         type: 'ATKSP',
         name: '攻击速度',
+      },{
+        type: 'HPSTEAL',
+        name: '生命偷取',
+        unit:'percent'
       }]
     }
   },

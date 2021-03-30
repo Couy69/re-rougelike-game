@@ -42,7 +42,6 @@ export default new Vuex.Store({
         }
       }
       state.backpackGrids = JSON.stringify(backpackGrids)
-      console.log(backpackGrids)
     },
 
     set_sys_info(state, data) {

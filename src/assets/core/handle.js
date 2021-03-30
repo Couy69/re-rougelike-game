@@ -6,6 +6,15 @@ import vuex from '../../store'
 import {
   equiAttributeWeapon
 } from '../config/equiAttributeWeapon'
+import {
+  equiAttributeArmor
+} from '../config/equiAttributeArmor'
+import {
+  equiAttributeRing
+} from '../config/equiAttributeRing'
+import {
+  equiAttributeShoes
+} from '../config/equiAttributeShoes'
 import equiInfoVueInstance from '@/views/component/equiInfoPanel'
 
 function deepCopy(data) {
@@ -195,6 +204,7 @@ function equiGet(attr) {
   let monsterLv = attr.LV
   let plarLv = vuex.state.PLAYER.playerFinalAttr.attr.LV
   equiLv = plarLv - monsterLv > 5 ? monsterLv + 5 : plarLv
+  equiLv = 30
 
   //根据副本类型计算获取的装备种类与稀有度
   let equiOutputProbability = config.configEquiOutputProbability[attr.unitType]
@@ -209,7 +219,16 @@ function equiGet(attr) {
       //   default:
       //     break;
       // }
-      equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
+      let random = Math.random()
+      if(random<0.25){
+        equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
+      }else if(random>=0.25&&random<0.5){
+        equiCreate(equiLv, equiQuality, equiAttributeArmor.data())
+      }else if(random>=0.5&&random<0.75){
+        equiCreate(equiLv, equiQuality, equiAttributeRing.data())
+      }else{
+        equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
+      }
     }
   })
 }
@@ -221,7 +240,6 @@ function equiCreate(equiLv, equiQuality, equiAttr) {
   equi.quality = equiQuality
   equi.category = equiBaseAttr(equiLv, equiQuality, equiAttr)
   equi.extraEntry = equiExtraEntry(equiLv, equiQuality, equiAttr)
-  console.log(equi)
   vuex.commit('add_backpack_equi', equi)
 }
 
@@ -247,7 +265,7 @@ function equiBaseAttr(equiLv, equiQuality, equiAttr) {
         entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient)
         break;
       case 'EVADE':
-        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient,0.05)
+        entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.05)
         break;
       case 'HPSTEAL':
         entry = formula.methods.baseEntryFormula(equiLv, item.valCoefficient, equiQuality.qualityCoefficient, 0.02)
@@ -269,13 +287,16 @@ function equiBaseAttr(equiLv, equiQuality, equiAttr) {
 }
 
 function equiExtraEntry(equiLv, equiQuality, equiAttr) {
-  let n = equiQuality.extraEntryNum, extraEntry = [], lv = equiLv,entry
+  let n = equiQuality.extraEntryNum,
+    extraEntry = [],
+    lv = equiLv,
+    entry
   for (let i = 0; i < n; i++) {
     var index = Math.floor((Math.random() * equiAttr.extraEntry.length));
     extraEntry.push(equiAttr.extraEntry[index])
   }
   var b = deepCopy(extraEntry)
-  b.map(item=>{
+  b.map(item => {
     switch (item.type) {
       case 'ATK':
         entry = formula.methods.baseEntryFormula(equiLv, config.ATK_C, equiQuality.qualityCoefficient)
@@ -286,6 +307,9 @@ function equiExtraEntry(equiLv, equiQuality, equiAttr) {
       case 'ARMOR':
         entry = formula.methods.baseEntryFormula(equiLv, config.ARMOR_C, equiQuality.qualityCoefficient)
         break;
+      case 'HP':
+        entry = formula.methods.baseEntryFormula(equiLv, config.HP_C, equiQuality.qualityCoefficient)
+        break;
       case 'HPRS':
         entry = formula.methods.baseEntryFormula(equiLv, config.HPRS_C, equiQuality.qualityCoefficient)
         break;
@@ -293,16 +317,16 @@ function equiExtraEntry(equiLv, equiQuality, equiAttr) {
         entry = formula.methods.baseEntryFormula(equiLv, config.ATKSP_C, equiQuality.qualityCoefficient)
         break;
       case 'EVADE':
-        entry = formula.methods.baseEntryFormula(equiLv, config.EVADE_C/100, equiQuality.qualityCoefficient,0.05)
+        entry = formula.methods.baseEntryFormula(equiLv, config.EVADE_C / 100, equiQuality.qualityCoefficient, 0.05)
         break;
       case 'HPSTEAL':
-        entry = formula.methods.baseEntryFormula(equiLv, config.HPSTEAL_C/100, equiQuality.qualityCoefficient, 0.02)
+        entry = formula.methods.baseEntryFormula(equiLv, config.HPSTEAL_C / 100, equiQuality.qualityCoefficient, 0.02)
         break;
       case 'CRIT':
-        entry = formula.methods.baseEntryFormula(equiLv, config.CRIT_C/100, equiQuality.qualityCoefficient, 0.05)
+        entry = formula.methods.baseEntryFormula(equiLv, config.CRIT_C / 100, equiQuality.qualityCoefficient, 0.05)
         break;
       case 'CRITDMG':
-        entry = formula.methods.baseEntryFormula(equiLv, config.CRITDMG_C/100, equiQuality.qualityCoefficient, 0.1)
+        entry = formula.methods.baseEntryFormula(equiLv, config.CRITDMG_C / 100, equiQuality.qualityCoefficient, 0.1)
         break;
       default:
         break;

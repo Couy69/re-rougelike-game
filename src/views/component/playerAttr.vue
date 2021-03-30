@@ -7,7 +7,7 @@
       EVADE: 0.5, //闪避
       ATKSPEED: 1.5, //每秒攻击次数
       BAT: 0.6, //基础攻击间隔
-      ARP: 1, //穿甲
+      ARP: 1, //无视护甲
       CRIT: 0.3, //暴击几率
       CRITDMG: 1.5, //暴击伤害
       HPRS: 1, //每秒生命恢复
@@ -73,7 +73,7 @@ export default {
         EVADE: 0, //闪避
         ATKSPEED: 1, //每秒攻击次数
         BAT: 1, //基础攻击间隔
-        ARP: 0, //穿甲
+        ARP: 0, //无视护甲
         CRIT: 0, //暴击几率
         CRITDMG: 1.5, //暴击伤害
         HPRS: 1, //每秒生命恢复

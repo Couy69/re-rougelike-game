@@ -53,7 +53,7 @@ const config = {
   }, {
     name: '稀有',
     qualityCoefficient: 1,
-    color: '#fff',
+    color: '#0095ff',
     extraEntryNum: 2,
   }, {
     name: '史诗',
@@ -75,14 +75,14 @@ const config = {
   },
 
   //对应额外词条数值的影响常数，越高给予的数值越多
-  ATK_C: 2, //攻击力
-  HP_C: 5,  //生命值
+  ATK_C: 1.2, //攻击力
+  HP_C: 4,  //生命值
   ARMOR_C: 0.2, //护甲
   EVADE_C: 0.3, //闪避
-  ARP_C: 1, //穿甲
+  ARP_C: 0.8, //无视护甲
   CRIT_C: 0.3, //暴击几率
   CRITDMG_C: 0.4, //暴击伤害
-  HPRS_C: 0.5, //每秒生命恢复
+  HPRS_C: 0.2, //每秒生命恢复
   HPSTEAL_C: 0.1, //生命偷取
-  ATKSP_C: 4, //攻击速度加成
+  ATKSP_C: 2, //攻击速度加成
 }

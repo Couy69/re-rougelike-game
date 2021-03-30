@@ -9,6 +9,7 @@
     >
       <div
         class="icon"
+        :class="{lv2: equi.quality.name == '稀有',lv3: equi.quality.name == '史诗',lv4: equi.quality.name == '唯一'}"
         :style="{ 'box-shadow': 'inset 0 0 7px 2px ' + equi.quality.color }"
       >
         <img :src="equi.category.iconSrc" alt="" />
@@ -24,7 +25,8 @@
           class="icon"
           :class="{
             'red-flash': equi.enchantlvl >= 13,
-            unique: equi.quality.name == '独特'
+            unique: equi.quality.name == '独特',
+            lv2: equi.quality.name == '稀有',lv3: equi.quality.name == '史诗',lv4: equi.quality.name == '唯一'
           }"
           :style="{ 'box-shadow': 'inset 0 0 7px 2px ' + equi.quality.color }"
         >
@@ -44,12 +46,14 @@
       </div>
       <div class="entry">
         <div v-for="v in equi.category.entry" :key="v.id">
-          <div>{{ v.name }} : {{ v.value }}</div>
+          <div v-if="v.unit=='percent'">{{ v.name }} : {{ Math.round(v.value*100) }}%</div>
+          <div v-else>{{ v.name }} : {{ (v.value) }}</div>
         </div>
       </div>
       <div class="extraEntry">
         <div v-for="v in equi.extraEntry" :key="v.id">
-          <div>{{ v.name }} : {{ v.value }}</div>
+          <div v-if="v.unit=='percent'">{{ v.name }} : {{ Math.round(v.value*100) }}%</div>
+          <div v-else>{{ v.name }} : {{ (v.value) }}</div>
         </div>
       </div>
     </div>
@@ -298,7 +302,7 @@ export default {
   width: 0.45rem;
   height: 0.45rem;
   background: #000;
-  background-image: url(../../assets/img/border/sp1.png);
+  background-image: url(../../assets/img/border/sp2.png);
   background-size: 120%;
   display: flex;
   background-position: center;
@@ -309,6 +313,16 @@ export default {
     width: 85%;
     height: 85%;
   }
+}
+.icon.lv2{
+  background-image: url(../../assets/img/border/sp1.png);
+}
+.icon.lv3{
+  background-image: url(../../assets/img/border/sp6.png);
+}
+.icon.lv4{
+  background-size: 120%;
+  background-image: url(../../assets/img/border/sp7.png);
 }
 .eicon {
   .icon {
