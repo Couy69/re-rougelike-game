@@ -2,7 +2,11 @@
   <div class="equiInfoPanel">
     <div class="cgrid">
       <div class="grid grid-weapon">
-        <!-- <equiItemPanel /> -->
+        <div
+            v-if="JSON.stringify(playerWeapon) != '{}'"
+          >
+            <equiItemPanel :item="playerWeapon" />
+          </div>
       </div>
       <div class="grid grid-armor"></div>
       <div class="grid grid-ring"></div>
@@ -12,11 +16,24 @@
     <div class="bgrid">
       <div v-for="(v, k) in backpackGrids" :key="k">
         <div class="grid">
-          <div v-if="JSON.stringify(v) != '{}'">
+          <div
+            v-if="JSON.stringify(v) != '{}'"
+            @contextmenu.prevent="openMenu(k,$event)"
+          >
             <equiItemPanel :item="v" />
           </div>
         </div>
       </div>
+      <ul
+        v-show="visible"
+        :style="{ left: left + 'px', top: top + 'px' }"
+        class="contextmenu"
+      >
+        <li @click="equipTheEquipment()">装备</li>
+        <!-- <li @click="lockTheEquipment(true)" v-if="!currentItem.locked">锁定</li> -->
+        <!-- <li @click="lockTheEquipment(false)" v-if="currentItem.locked">解锁</li> -->
+        <!-- <li @click="sellTheEquipment()">出售</li> -->
+      </ul>
     </div>
   </div>
 </template>
@@ -27,6 +44,11 @@ export default {
   components: { equiItemPanel },
   data() {
     return {
+      left: "",
+      top: "",
+      visible: false,
+      currentItem: {},
+      currentItemIndex: '',
     }
   },
   props: ["item"],
@@ -34,24 +56,74 @@ export default {
   computed: {
     backpackGrids() {
       return JSON.parse(this.$store.state.backpackGrids)
+    },
+    playerWeapon(){
+      return this.$store.state.PLAYER.playerWeapon
     }
   },
-  
+
   mounted() {
     // setInterval(()=>{
     //   console.log(this.backpackGrids)
     // },1000)
   },
-  // watch: {
-  //   Grids: {
-  //     handler() {
-  //       this.backpackGrids = JSON.parse(JSON.stringify(this.Grids))
-  //     },
-  //     immediate: false,
-  //     deep: true
-  //   }
-  // },
-  methods: {}
+  watch: {
+    visible(value) {
+      if (value) {
+        document.body.addEventListener("click", this.closeMenu);
+      } else {
+        document.body.removeEventListener("click", this.closeMenu);
+      }
+    },
+  },
+  methods: {
+    openMenu(k,e) {
+      this.currentItemIndex = k
+      this.currentItem = this.backpackGrids[k]
+      const menuMinWidth = 105
+      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+      const offsetWidth = this.$el.offsetWidth // container width
+      const maxLeft = offsetWidth - menuMinWidth + 155 // left boundary
+      var left = e.clientX - offsetLeft + 15 // 15: margin right
+
+      if (left > maxLeft) {
+        this.left = maxLeft
+      } else {
+        this.left = left
+      }
+
+      this.top = e.offsetY
+      this.visible = true
+    },
+    closeMenu() {
+      this.visible = false;
+    },
+    equipTheEquipment() {
+      let PLAYER = this.$store.state.PLAYER
+      switch (this.currentItem.itemType.code) {
+        case 'weapon':
+          if(JSON.stringify(this.playerWeapon) == "{}"){
+            
+            this.$store.commit("remove_backpack_equi", this.currentItemIndex)  
+            PLAYER.setPlayerWeapon(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)  
+          }else{
+            this.$store.commit("change_backpack_equi",{equi:this.playerWeapon, index:this.currentItemIndex})  
+            PLAYER.setPlayerWeapon(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)  
+          }
+          break;
+        case 'armor':
+          break;
+        case 'ring':
+          break;
+        case 'shoes':
+          break;
+        default:
+          break;
+      }
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -107,8 +179,36 @@ export default {
   height: 200px;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
   .grid {
     border-radius: 0px;
+  }
+}
+.contextmenu {
+  margin: 0;
+  background: #000;
+  border: 1px solid #fff;
+  z-index: 3000;
+  position: absolute;
+  list-style-type: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+
+  li {
+    margin: 0;
+    padding: 9px 16px;
+    cursor: pointer;
+    border-top: 1px solid #ccc;
+    margin-top: -1px;
+    font-size: 14px;
+    letter-spacing: 6px;
+    word-break: keep-all;
+    &:hover {
+      color: #ccc;
+    }
   }
 }
 </style>

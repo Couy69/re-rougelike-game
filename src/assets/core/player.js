@@ -1,3 +1,6 @@
+import {
+  formula
+} from './formula';
 class Player {
   constructor() {
     this.playerBaseAttr = {}
@@ -34,27 +37,78 @@ class Player {
     this.playerRing = {}
     this.playerShoes = {}
   }
-  setPlayerBaseAttr(data){
+  setPlayerBaseAttr(data) {
     this.playerBaseAttr = data
   }
   setPlayerWeapon(data) {
-    this.state.playerAttribute.weapon = data
+    this.playerWeapon = data
     this.setPlayerFinalAttribute()
   }
   setPlayerArmor(data) {
-    this.state.playerAttribute.armor = data
+    this.playerArmor = data
     this.setPlayerFinalAttribute()
   }
   setPlayerRing(data) {
-    this.state.playerAttribute.ring = data
+    this.playerRing = data
     this.setPlayerFinalAttribute()
   }
   setPlayerShoes(data) {
-    this.state.playerAttribute.shoes = data
+    this.playerShoes = data
     this.setPlayerFinalAttribute()
   }
   setPlayerFinalAttribute() {
-    this.playerFinalAttr = this.playerBaseAttr
+    // console.log()
+    let entry = [],
+    playerBaseAttr = JSON.parse(JSON.stringify(this.playerBaseAttr)),
+    attribute = playerBaseAttr.attr
+    if (JSON.stringify(this.playerWeapon) != '{}') {
+      this.playerWeapon.category.entry.map(item => {
+        entry.push(item)
+      })
+      this.playerWeapon.extraEntry.map(item => {
+        entry.push(item)
+      })
+      console.log(entry)
+    }
+    console.log(attribute)
+    entry.map(item => {
+      switch (item.type) {
+        case 'ATK':
+          attribute.ATKMAX += formula.methods.toNumber(item.value)
+          attribute.ATKMIN += formula.methods.toNumber(item.value)
+          break;
+        case 'ARMOR':
+          attribute.ARMOR += formula.methods.toNumber(item.value)
+          break;
+        case 'HP':
+          attribute.MAXHP += formula.methods.toNumber(item.value)
+          break;
+        case 'ARP':
+          attribute.ARP += formula.methods.toNumber(item.value)
+          break;
+        case 'HPRS':
+          attribute.HPRS += formula.methods.toNumber(item.value)
+          break;
+        case 'HPSTEAL':
+          attribute.HPSTEAL += formula.methods.toNumber(item.value)
+          break;
+        case 'ATKSP':
+          attribute.ATKSP += formula.methods.toNumber(item.value)
+          break;
+        case 'EVADE':
+          attribute.EVADE += formula.methods.toNumber(item.value)
+          break;
+        case 'CRIT':
+          attribute.CRIT += formula.methods.toNumber(item.value)
+          break;
+        case 'CRITDMG':
+          attribute.CRITDMG += formula.methods.toNumber(item.value)
+          break;
+        default:
+          break;
+      }
+    })
+    this.playerFinalAttr = playerBaseAttr
   }
 
 }

@@ -3,7 +3,6 @@
     <div
       class="eicon"
       v-if="JSON.stringify(equi) != '{}'"
-      @contextmenu.prevent="openMenu($event)"
       @mouseover="showItemInfo($event, equi.itemType, equi)"
       @mouseleave="closeItemInfo"
     >
@@ -53,11 +52,11 @@
       <div class="entry">
         <div v-for="v in equi.category.entry" :key="v.id">
           <div v-if="v.unit == 'percent'">
-            {{ v.name }} : {{ Math.round(v.value * 100) }}%
+            {{ v.name }} : +{{ Math.round(v.value * 100) }}%
             <span class="value-info">({{ Math.round(v.min * 100) }}%-{{ Math.round(v.max * 100) }}%) </span>
           </div>
           <div v-else>
-            {{ v.name }} : {{ v.value }}
+            {{ v.name }} : +{{ v.value }}
             <span class="value-info">({{ v.min }}-{{ v.max }}) </span>
           </div>
         </div>
@@ -65,11 +64,11 @@
       <div class="extraEntry">
         <div v-for="v in equi.extraEntry" :key="v.id">
           <div v-if="v.unit == 'percent'">
-            {{ v.name }} : {{ Math.round(v.value * 100) }}%
+            {{ v.name }} : +{{ Math.round(v.value * 100) }}%
             <span class="value-info">({{ Math.round(v.min * 100) }}%-{{ Math.round(v.max * 100) }}%) </span>
           </div>
           <div v-else>
-            {{ v.name }} : {{ v.value }}
+            {{ v.name }} : +{{ v.value }}
             <span class="value-info">({{ v.min }}-{{ v.max }}) </span>
           </div>
         </div>
@@ -138,15 +137,17 @@ export default {
   },
   props: ["item"],
   mounted() {
-    this.equi = this.$deepCopy(this.item)
+    try {
+      this.equi =JSON.parse(JSON.stringify(this.item))
+    } catch (error) {
+    }
   },
   watch: {
     item() {
-      this.equi = this.$deepCopy(this.item)
+      this.equi =JSON.parse(JSON.stringify(this.item))
     }
   },
   methods: {
-    openMenu() {},
     showItemInfo(e, type, item, needComparison) {
       let x = e.clientX,
         y = e.clientY,
@@ -262,7 +263,7 @@ export default {
         var index = Math.floor(Math.random() * this.extraEntry.length)
         extraEntry.push(this.extraEntry[index])
       }
-      var b = this.$deepCopy(extraEntry)
+      var b = JSON.parse(JSON.stringify(extraEntry))
       b.map(item => {
         switch (item.type) {
           case "ATK":

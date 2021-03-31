@@ -5,6 +5,11 @@
 
 export const formula = {
   methods: {
+
+    toNumber(data) {
+      return Number((data).toFixed(2))
+    },
+
     /**
      * 根据护甲计算承受的伤害比例
      * 请注意无视护甲属性并不会导致护甲为负这种情况

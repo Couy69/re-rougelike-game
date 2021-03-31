@@ -50,6 +50,7 @@ function numberFixed(num, places) {
 }
 
 function saveGame() {
+  console.log(vuex.state.PLAYER)
   let saveData = encrypt(JSON.stringify(vuex.state.PLAYER))
   localStorage.setItem('_reSD', saveData)
 }
@@ -59,7 +60,7 @@ function loadGame() {
     let sd = localStorage.getItem("_reSD")
     if (sd) {
       let saveData = JSON.parse(decrypt(sd))
-      vuex.commit('set_player_attribute', saveData)
+      vuex.commit('set_player_attribute_constraint', saveData)
       vuex.commit("set_sys_info", {
         msg: `
               已加载存档
@@ -229,7 +230,7 @@ function equiGet(attr) {
       // }else{
       //   equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
       // }
-      equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
+      equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
     }
   })
 }
@@ -352,5 +353,5 @@ export default {
   decrypt,
   saveGame,
   loadGame,
-  equiGet
+  equiGet,
 }
