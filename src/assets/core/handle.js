@@ -221,16 +221,16 @@ function equiGet(attr) {
       //     break;
       // }
       let random = Math.random()
-      // if(random<0.25){
-      //   equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
-      // }else if(random>=0.25&&random<0.5){
-      //   equiCreate(equiLv, equiQuality, equiAttributeArmor.data())
-      // }else if(random>=0.5&&random<0.75){
-      //   equiCreate(equiLv, equiQuality, equiAttributeRing.data())
-      // }else{
-      //   equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
-      // }
-      equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
+      if(random<0.25){
+        equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
+      }else if(random>=0.25&&random<0.5){
+        equiCreate(equiLv, equiQuality, equiAttributeArmor.data())
+      }else if(random>=0.5&&random<0.75){
+        equiCreate(equiLv, equiQuality, equiAttributeRing.data())
+      }else{
+        equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
+      }
+      // equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
     }
   })
 }

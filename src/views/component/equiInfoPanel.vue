@@ -2,15 +2,25 @@
   <div class="equiInfoPanel">
     <div class="cgrid">
       <div class="grid grid-weapon">
-        <div
-            v-if="JSON.stringify(playerWeapon) != '{}'"
-          >
-            <equiItemPanel :item="playerWeapon" />
-          </div>
+        <div v-if="JSON.stringify(playerWeapon) != '{}'">
+          <equiItemPanel :item="playerWeapon" />
+        </div>
       </div>
-      <div class="grid grid-armor"></div>
-      <div class="grid grid-ring"></div>
-      <div class="grid grid-shoes"></div>
+      <div class="grid grid-armor">
+        <div v-if="JSON.stringify(playerArmor) != '{}'">
+          <equiItemPanel :item="playerArmor" />
+        </div>
+      </div>
+      <div class="grid grid-ring">
+        <div v-if="JSON.stringify(playerRing) != '{}'">
+          <equiItemPanel :item="playerRing" />
+        </div>
+      </div>
+      <div class="grid grid-shoes">
+        <div v-if="JSON.stringify(playerShoes) != '{}'">
+          <equiItemPanel :item="playerShoes" />
+        </div>
+      </div>
       <!-- <equiItemPanel /> -->
     </div>
     <div class="bgrid">
@@ -18,7 +28,7 @@
         <div class="grid">
           <div
             v-if="JSON.stringify(v) != '{}'"
-            @contextmenu.prevent="openMenu(k,$event)"
+            @contextmenu.prevent="openMenu(k, $event)"
           >
             <equiItemPanel :item="v" />
           </div>
@@ -48,7 +58,7 @@ export default {
       top: "",
       visible: false,
       currentItem: {},
-      currentItemIndex: '',
+      currentItemIndex: ""
     }
   },
   props: ["item"],
@@ -57,9 +67,18 @@ export default {
     backpackGrids() {
       return JSON.parse(this.$store.state.backpackGrids)
     },
-    playerWeapon(){
+    playerWeapon() {
       return this.$store.state.PLAYER.playerWeapon
-    }
+    },
+    playerArmor() {
+      return this.$store.state.PLAYER.playerArmor
+    },
+    playerRing() {
+      return this.$store.state.PLAYER.playerRing
+    },
+    playerShoes() {
+      return this.$store.state.PLAYER.playerShoes
+    },
   },
 
   mounted() {
@@ -70,14 +89,14 @@ export default {
   watch: {
     visible(value) {
       if (value) {
-        document.body.addEventListener("click", this.closeMenu);
+        document.body.addEventListener("click", this.closeMenu)
       } else {
-        document.body.removeEventListener("click", this.closeMenu);
+        document.body.removeEventListener("click", this.closeMenu)
       }
-    },
+    }
   },
   methods: {
-    openMenu(k,e) {
+    openMenu(k, e) {
       this.currentItemIndex = k
       this.currentItem = this.backpackGrids[k]
       const menuMinWidth = 105
@@ -96,31 +115,69 @@ export default {
       this.visible = true
     },
     closeMenu() {
-      this.visible = false;
+      this.visible = false
     },
     equipTheEquipment() {
       let PLAYER = this.$store.state.PLAYER
       switch (this.currentItem.itemType.code) {
-        case 'weapon':
-          if(JSON.stringify(this.playerWeapon) == "{}"){
-            
-            this.$store.commit("remove_backpack_equi", this.currentItemIndex)  
+        case "weapon":
+          if (JSON.stringify(this.playerWeapon) == "{}") {
+            this.$store.commit("remove_backpack_equi", this.currentItemIndex)
             PLAYER.setPlayerWeapon(this.currentItem)
-            this.$store.commit("set_player_attribute", PLAYER)  
-          }else{
-            this.$store.commit("change_backpack_equi",{equi:this.playerWeapon, index:this.currentItemIndex})  
+            this.$store.commit("set_player_attribute", PLAYER)
+          } else {
+            this.$store.commit("change_backpack_equi", {
+              equi: this.playerWeapon,
+              index: this.currentItemIndex
+            })
             PLAYER.setPlayerWeapon(this.currentItem)
-            this.$store.commit("set_player_attribute", PLAYER)  
+            this.$store.commit("set_player_attribute", PLAYER)
           }
-          break;
-        case 'armor':
-          break;
-        case 'ring':
-          break;
-        case 'shoes':
-          break;
+          break
+        case "armor":
+          if (JSON.stringify(this.playerArmor) == "{}") {
+            this.$store.commit("remove_backpack_equi", this.currentItemIndex)
+            PLAYER.setPlayerArmor(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)
+          } else {
+            this.$store.commit("change_backpack_equi", {
+              equi: this.playerArmor,
+              index: this.currentItemIndex
+            })
+            PLAYER.setPlayerArmor(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)
+          }
+          break
+        case "ring":
+          if (JSON.stringify(this.playerRing) == "{}") {
+            this.$store.commit("remove_backpack_equi", this.currentItemIndex)
+            PLAYER.setPlayerRing(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)
+          } else {
+            this.$store.commit("change_backpack_equi", {
+              equi: this.playerRing,
+              index: this.currentItemIndex
+            })
+            PLAYER.setPlayerRing(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)
+          }
+          break
+        case "shoes":
+          if (JSON.stringify(this.playerShoes) == "{}") {
+            this.$store.commit("remove_backpack_equi", this.currentItemIndex)
+            PLAYER.setPlayerShoes(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)
+          } else {
+            this.$store.commit("change_backpack_equi", {
+              equi: this.playerShoes,
+              index: this.currentItemIndex
+            })
+            PLAYER.setPlayerShoes(this.currentItem)
+            this.$store.commit("set_player_attribute", PLAYER)
+          }
+          break
         default:
-          break;
+          break
       }
     }
   }

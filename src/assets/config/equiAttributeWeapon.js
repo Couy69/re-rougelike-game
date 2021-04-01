@@ -14,11 +14,11 @@ export const equiAttributeWeapon = {
         name: '士兵短剑',
         iconSrc: './icons/W1.png',
         entry: [{
-          valCoefficient: 2.2,
+          valCoefficient: 1.8,
           type: 'ATK',
           name: '攻击力'
         },{
-          valCoefficient: 4,
+          valCoefficient: 0.6,
           type: 'ATKSP',
           name: '攻击速度',
         }]
@@ -26,7 +26,7 @@ export const equiAttributeWeapon = {
         name: '巨脊剑',
         iconSrc: './icons/W2.png',
         entry: [{
-          valCoefficient: 2.2,
+          valCoefficient: 1.8,
           type: 'ATK',
           name: '攻击力'
         },{
@@ -39,11 +39,11 @@ export const equiAttributeWeapon = {
         name: '守护巨剑',
         iconSrc: './icons/W3.png',
         entry: [{
-          valCoefficient: 2.2,
+          valCoefficient: 1.8,
           type: 'ATK',
           name: '攻击力'
         },{
-          valCoefficient: 1,
+          valCoefficient: 0.2,
           type: 'ARMOR',
           name: '护甲',
         }]
@@ -51,7 +51,7 @@ export const equiAttributeWeapon = {
         name: '流光剑',
         iconSrc: './icons/W4.png',
         entry: [{
-          valCoefficient: 2.2,
+          valCoefficient: 1.8,
           type: 'ATK',
           name: '攻击力'
         },{
@@ -64,7 +64,7 @@ export const equiAttributeWeapon = {
         name: '吸血短剑',
         iconSrc: './icons/W5.png',
         entry: [{
-          valCoefficient: 2.2,
+          valCoefficient: 1.8,
           type: 'ATK',
           name: '攻击力'
         },{

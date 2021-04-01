@@ -6,8 +6,8 @@
 export const formula = {
   methods: {
 
-    toNumber(data) {
-      return Number((data).toFixed(2))
+    toNumber(data,index=2) {
+      return Number((data).toFixed(index))
     },
 
     /**
@@ -28,9 +28,8 @@ export const formula = {
      * @param {obj} attr 需计算的目标属性
      */
     ATKSpeedFormula: (attr) => {
-      attr.ATKSPEED = attr.BAT * (100 + attr.ATKSP)
+      attr.ATKSPEED = formula.methods.toNumber(attr.BAT * (100 + attr.ATKSP)/100)
       attr.ATKSPEED = attr.ATKSPEED >= 2 ? 2 : attr.ATKSPEED
-      return takeDMGPercent
     },
 
     /**

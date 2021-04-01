@@ -14,11 +14,11 @@ export const equiAttributeShoes = {
         name: '精灵短靴',
         iconSrc: './icons/S1.png',
         entry: [{
-          valCoefficient: 0.5,
+          valCoefficient: 0.3,
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 2,
+          valCoefficient: 1,
           type: 'ATKSP',
           name: '攻击速度',
         }]
@@ -26,11 +26,11 @@ export const equiAttributeShoes = {
         name: '钉头靴',
         iconSrc: './icons/S2.png',
         entry: [{
-          valCoefficient: 0.5,
+          valCoefficient: 0.3,
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 0.5,
+          valCoefficient: 0.3,
           type: 'CRIT',
           name: '暴击率',
           unit: 'percent'
@@ -39,7 +39,7 @@ export const equiAttributeShoes = {
         name: '铁皮胫甲',
         iconSrc: './icons/S3.png',
         entry: [{
-          valCoefficient: 0.5,
+          valCoefficient: 0.3,
           type: 'ARMOR',
           name: '护甲'
         }, {
@@ -51,7 +51,7 @@ export const equiAttributeShoes = {
         name: '斥候长靴',
         iconSrc: './icons/S4.png',
         entry: [{
-          valCoefficient: 0.5,
+          valCoefficient: 0.3,
           type: 'ARMOR',
           name: '护甲'
         }, {
@@ -64,7 +64,7 @@ export const equiAttributeShoes = {
         name: '无踪长靴',
         iconSrc: './icons/S5.png',
         entry: [{
-          valCoefficient: 0.5,
+          valCoefficient: 0.3,
           type: 'ARMOR',
           name: '护甲'
         }, {
@@ -76,7 +76,7 @@ export const equiAttributeShoes = {
         name: '影脉长靴',
         iconSrc: './icons/S6.png',
         entry: [{
-          valCoefficient: 0.5,
+          valCoefficient: 0.3,
           type: 'ARMOR',
           name: '护甲'
         }, {

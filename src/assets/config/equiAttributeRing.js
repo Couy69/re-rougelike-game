@@ -56,7 +56,7 @@ export const equiAttributeRing = {
           type: 'ATK',
           name: '攻击力'
         },{
-          valCoefficient: 3,
+          valCoefficient: 1,
           type: 'ATKSP',
           name: '攻击速度',
         }]

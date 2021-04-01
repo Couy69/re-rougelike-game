@@ -14,11 +14,11 @@ export const equiAttributeArmor = {
         name: '铁甲',
         iconSrc: './icons/A1.png',
         entry: [{
-          valCoefficient: 0.6,
+          valCoefficient: 0.4,
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 0.3,
+          valCoefficient: 0.2,
           type: 'ARMOR',
           name: '护甲',
         }]
@@ -26,11 +26,11 @@ export const equiAttributeArmor = {
         name: '赤红甲',
         iconSrc: './icons/A2.png',
         entry: [{
-          valCoefficient: 0.6,
+          valCoefficient: 0.4,
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 5,
+          valCoefficient: 4,
           type: 'HP',
           name: '生命上限',
         }]
@@ -38,11 +38,11 @@ export const equiAttributeArmor = {
         name: '轻便布衣',
         iconSrc: './icons/A3.png',
         entry: [{
-          valCoefficient: 0.6,
+          valCoefficient: 0.4,
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 3,
+          valCoefficient: 1,
           type: 'ATKSP',
           name: '攻击速度',
         }]
@@ -50,11 +50,11 @@ export const equiAttributeArmor = {
         name: '高级战甲',
         iconSrc: './icons/A4.png',
         entry: [{
-          valCoefficient: 0.6,
+          valCoefficient: 0.4,
           type: 'ARMOR',
           name: '护甲'
         }, {
-          valCoefficient: 0.7,
+          valCoefficient: 0.3,
           type: 'HPRS',
           name: '每秒生命恢复',
         }]
@@ -62,7 +62,7 @@ export const equiAttributeArmor = {
         name: '银甲',
         iconSrc: './icons/A5.png',
         entry: [{
-          valCoefficient: 0.6,
+          valCoefficient: 0.4,
           type: 'ARMOR',
           name: '护甲'
         }, {
