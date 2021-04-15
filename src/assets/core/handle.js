@@ -144,7 +144,7 @@ function DMGCalculation(attacker, defender, component) {
       } else {
         //玩家胜利
         clearAllCombatTimer()
-        missionSuccess(defender)
+        missionSuccess(defender, attacker)
         return console.log('palyerWin')
       }
     }
@@ -185,14 +185,54 @@ function missionFail() {
   })
 }
 
-function missionSuccess(attr) {
-  equiGet(attr)
+function missionSuccess(monsterAttr, playerAttr) {
+  equiGet(monsterAttr)
+  EXPGet(monsterAttr, playerAttr)
   vuex.commit("set_sys_info", {
     msg: `
-          你获胜了，获得了${attr.EXP}点经验
+          你获胜了，获得了${monsterAttr.EXP}点经验
         `,
     type: "green"
   })
+}
+
+/**
+ * 计算经验获取
+ * @param {obj} monsterAttr
+ * @param {obj} playerAttr
+ */
+function EXPGet(monsterAttr, playerAttr) {
+  console.log(playerAttr)
+  if ((playerAttr.EXP + monsterAttr.EXP) >= config.lvUpNeedExp[playerAttr.LV][1]) {
+    LVUp(playerAttr)
+  }
+  vuex.commit("set_player_exp", playerAttr.EXP + monsterAttr.EXP)
+}
+
+/**
+ * 等级提升相关计算
+ * @param {obj} playerAttr 
+ */
+function LVUp(playerAttr) {
+  vuex.commit("set_player_lv", playerAttr.LV + 1)
+  vuex.commit("set_sys_info", {
+    msg: `
+    等级提升到了${playerAttr.LV}
+    `,
+    type: "blue"
+  })
+  var baseAttr = vuex.state.PLAYER.playerBaseAttr.attr
+  console.log(baseAttr)
+  // LVGETATK: 3,
+  //           LVGETARMOR: 0,
+  //           LVGETHPRS: 0,
+  //           LVGETATKSP: 1,
+  baseAttr.ATKMAX = baseAttr.ATKMAX+baseAttr.LVGETATK*(playerAttr.LV-1)
+  baseAttr.ATKMIN = baseAttr.ATKMIN+baseAttr.LVGETATK*(playerAttr.LV-1)
+  baseAttr.ARMOR = baseAttr.ARMOR+baseAttr.LVGETARMOR*(playerAttr.LV-1)
+  baseAttr.HPRS = baseAttr.HPRS+baseAttr.LVGETHPRS*(playerAttr.LV-1)
+  baseAttr.ATKSP = baseAttr.ATKSP+baseAttr.LVGETATKSP*(playerAttr.LV-1)
+  vuex.commit("set_player_attribute_byBaseAttr",baseAttr)
 }
 
 /**
@@ -205,7 +245,7 @@ function equiGet(attr) {
   let monsterLv = attr.LV
   let plarLv = vuex.state.PLAYER.playerFinalAttr.attr.LV
   equiLv = plarLv - monsterLv > 5 ? monsterLv + 5 : plarLv
-  equiLv = 30
+  // equiLv = 30
 
   //根据副本类型计算获取的装备种类与稀有度
   let equiOutputProbability = config.configEquiOutputProbability[attr.unitType]
@@ -221,13 +261,13 @@ function equiGet(attr) {
       //     break;
       // }
       let random = Math.random()
-      if(random<0.25){
+      if (random < 0.25) {
         equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())
-      }else if(random>=0.25&&random<0.5){
+      } else if (random >= 0.25 && random < 0.5) {
         equiCreate(equiLv, equiQuality, equiAttributeArmor.data())
-      }else if(random>=0.5&&random<0.75){
+      } else if (random >= 0.5 && random < 0.75) {
         equiCreate(equiLv, equiQuality, equiAttributeRing.data())
-      }else{
+      } else {
         equiCreate(equiLv, equiQuality, equiAttributeShoes.data())
       }
       // equiCreate(equiLv, equiQuality, equiAttributeWeapon.data())

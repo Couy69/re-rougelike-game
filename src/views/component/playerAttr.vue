@@ -22,6 +22,13 @@
   <div class="playerAttr">
     <div v-if="JSON.stringify(attr).length > 2">
       <p>
+        lv：<span>{{ attr.LV }}</span>
+      </p>
+      <p v-if="JSON.stringify(attr).length > 2">
+        exp：<span>{{ attr.EXP }}/{{ config.lvUpNeedExp[attr.LV - 1][2] }}</span
+        >
+      </p>
+      <p>
         生命值：<span>{{ attr.MAXHP }}</span>
       </p>
       <p>
@@ -43,16 +50,16 @@
         基础攻击间隔：<span>{{ attr.BAT }}</span>
       </p>
       <p>
-        闪避：<span>{{ attr.EVADE * 100 }}%</span>
+        闪避：<span>{{ parseInt(attr.EVADE * 100) }}%</span>
       </p>
       <p>
-        暴击几率：<span>{{ attr.CRIT * 100 }}%</span>
+        暴击几率：<span>{{ parseInt(attr.CRIT * 100) }}%</span>
       </p>
       <p>
-        暴击伤害：<span>{{ attr.CRITDMG * 100 }}%</span>
+        暴击伤害：<span>{{ parseInt(attr.CRITDMG * 100) }}%</span>
       </p>
       <p>
-        生命偷取：<span>{{ attr.HPSTEAL * 100 }}%</span>
+        生命偷取：<span>{{ parseInt(attr.HPSTEAL * 100) }}%</span>
       </p>
     </div>
   </div>
@@ -63,6 +70,7 @@ export default {
   components: {},
   data() {
     return {
+      config: {},
       autoHealthRecovery: {},
       attr: {
         MAXHP: 100,
@@ -84,26 +92,26 @@ export default {
   props: ["item"],
   computed: {
     PLAYER() {
-      if(JSON.stringify(this.$store.state.PLAYER).length<=2){
+      if (JSON.stringify(this.$store.state.PLAYER).length <= 2) {
         return
       }
-      this.attr = this.$store.state.PLAYER.playerFinalAttr.attr||{}
+      this.attr = this.$store.state.PLAYER.playerFinalAttr.attr || {}
       return this.$store.state.PLAYER.playerFinalAttr
     }
   },
-  watch:{
+  watch: {
     PLAYER: {
       handler() {
         try {
-        } catch (error) {
-          
-        }
+        } catch (error) {}
       },
       immediate: false,
       deep: true
-    },  
+    }
   },
-  
+  created() {
+    this.config = config
+  },
   mounted() {
     // this.autoHealthRecovery = setInterval(() => {
     //   this.$store.commit('set_player_curhp', this.attr.HPRS)

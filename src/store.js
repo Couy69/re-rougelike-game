@@ -13,8 +13,20 @@ export default new Vuex.Store({
     backpackGrids: JSON.stringify(new Array(24).fill({}))
   },
   mutations: {
+    set_player_exp(state, data) {
+      this.state.PLAYER.playerFinalAttr.attr.EXP = data
+      this.state.PLAYER.playerBaseAttr.attr.EXP = data
+    },
+    set_player_lv(state, data) {
+      this.state.PLAYER.playerFinalAttr.attr.LV = data
+      this.state.PLAYER.playerBaseAttr.attr.LV = data
+    },
     set_player_attribute(state, data) {
       this.state.PLAYER = data
+    },
+    set_player_attribute_byBaseAttr(state, attr) {
+      this.state.PLAYER.playerBaseAttr.attr = attr
+      this.state.PLAYER.setPlayerFinalAttribute()
     },
     set_player_attribute_constraint(state, data) {
       let player = new Player()

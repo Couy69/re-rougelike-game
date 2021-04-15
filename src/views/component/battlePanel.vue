@@ -1,8 +1,8 @@
 <template>
   <div class="battlePanel">
-    <div class="button" style="position:fixed;" @click="battleStart">
+    <!-- <div class="button" style="position:fixed;" @click="battleStart">
       模拟战斗
-    </div>
+    </div> -->
     <div class="area">
       <div class="player" v-if="JSON.stringify(PLAYER).length > 2">
         <div class="player-hp">

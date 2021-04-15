@@ -43,10 +43,11 @@
 <script>
 import Monster from "../../assets/core/monster.js"
 import { dungeonsConfig } from "../../assets/config/dungeonsConfig.js"
+import { assist } from "../../assets/js/assist"
 export default {
   name: "challengeMenu",
   components: {},
-  mixins: [dungeonsConfig],
+  mixins: [dungeonsConfig,assist],
   data() {
     return {
       currentMenu: {},
@@ -117,6 +118,10 @@ export default {
         monster.setMonsterFinalAttribute()
         this.$store.commit("set_monster_attribute", monster)
         this.closeMenu()
+        setTimeout(()=>{
+          let battlePanel = this.findBrothersComponents(this, 'battlePanel', false)[0]
+          battlePanel.battleStart()
+        },600)
       } catch (error) {
         this.$store.commit("set_sys_info", {
           msg: `

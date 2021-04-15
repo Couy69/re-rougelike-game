@@ -154,6 +154,7 @@ class Player {
           break;
       }
     })
+    console.log(attribute)
     formula.methods.ATKSpeedFormula(attribute)
     
     if (hpPercent) {
